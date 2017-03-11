@@ -7,9 +7,17 @@ namespace AtemEmulator.State.Media
     {
         [XmlArrayItem("Still")]
         public List<MediaPoolStill> Stills { get; set; }
-
+        public bool ShouldSerializeStills()
+        {
+            return Stills != null && Stills.Count > 0;
+        }
+        
         [XmlArrayItem("Clip")]
         public List<MediaPoolClip> Clips { get; set; }
+        public bool ShouldSerializeClips()
+        {
+            return Clips != null && Clips.Count > 0;
+        }
     }
 
     public class MediaPoolStill

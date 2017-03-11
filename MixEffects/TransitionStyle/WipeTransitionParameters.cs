@@ -11,7 +11,7 @@ namespace AtemEmulator.State.MixEffects.TransitionStyle
         public Pattern Pattern { get; set; }
 
         [XmlAttribute("symmetry")]
-        public int Symmetry { get; set; }
+        public double Symmetry { get; set; }
 
         [XmlAttribute("xPosition")]
         public double XPosition { get; set; }
@@ -29,9 +29,9 @@ namespace AtemEmulator.State.MixEffects.TransitionStyle
         public VideoSource BorderInput { get; set; }
 
         [XmlAttribute("borderWidth")]
-        public int BorderWidth { get; set; }
+        public double BorderWidth { get; set; }
 
         [XmlAttribute("borderSoftness")]
-        public int BorderSoftness { get; set; }
+        public double BorderSoftness { get; set; }
     }
 }

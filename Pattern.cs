@@ -4,6 +4,7 @@ namespace AtemEmulator.State
    public enum Pattern
     {
         DiamondIris,
+        CircleIris,
         // TODO
     }
 

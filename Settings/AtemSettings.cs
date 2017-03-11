@@ -8,17 +8,29 @@ namespace AtemEmulator.State.Settings
         [XmlAttribute("videoMode")]
         public VideoMode VideoMode { get; set; }
 
+        [XmlAttribute("downConvertMode")]
+        public DownConvertMode DownConvertMode { get; set; }
+
         [XmlAttribute("abDirect")]
         public AtemBool AbDirect { get; set; }
 
         [XmlAttribute("cameraAux")]
         public int CameraAux { get; set; }
 
+        [XmlAttribute]
+        public SDI3GOutputLevel SDI3GOutputLevel { get; set; }
+
         public List<MultiViewVideoMode> MultiViewVideoModes { get; set; }
 
         public List<DownConvertedHDVideoMode> DownConvertedHDVideoModes { get; set; }
+        public bool ShouldSerializeDownConvertedHDVideoModes()
+        {
+            return DownConvertedHDVideoModes != null && DownConvertedHDVideoModes.Count > 0;
+        }
 
         public List<AudioMonitor> AudioMonitors { get; set; }
+
+        public Talkback Talkback { get; set; }
 
         public List<Input> Inputs { get; set; }
 
@@ -28,6 +40,26 @@ namespace AtemEmulator.State.Settings
 
         [XmlArrayItem("Button")]
         public List<ButtonMap> ButtonMapping { get; set; }
+
+        public List<Remote> Remotes { get; set; }
+        public bool ShouldSerializeRemotes()
+        {
+            return Remotes != null && Remotes.Count > 0;
+        }
+
+        public UpstreamKeys UpstreamKeys { get; set; }
+    }
+
+    public enum SDI3GOutputLevel
+    {
+        LevelA,
+        LevelB,
+    }
+
+    public enum DownConvertMode
+    {
+        // TODO
+        CentreCut,
     }
 
     public class MultiViewVideoMode
@@ -88,5 +120,35 @@ namespace AtemEmulator.State.Settings
 
         [XmlAttribute("mappedToCamera")]
         public AtemBool MappedToCamera { get; set; }
+    }
+
+    public class Remote
+    {
+        [XmlAttribute("index")]
+        public int Index { get; set; }
+
+        [XmlAttribute("function")]
+        public RemoteFunction Function { get; set; }
+    }
+
+    public enum RemoteFunction
+    {
+        None,
+  
+        [XmlEnum("PTZ VISCA")]
+        PTZVISCA,
+        //TODO
+    }
+
+    public class Talkback
+    {
+        [XmlAttribute("sdiMuted")]
+        public AtemBool SdiMuted { get; set; }
+    }
+
+    public class UpstreamKeys
+    {
+        [XmlAttribute("sizeLink")]
+        public AtemBool SizeLink { get; set; }
     }
 }

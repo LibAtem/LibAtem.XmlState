@@ -7,7 +7,8 @@ namespace AtemEmulator.State.MixEffects.TransitionStyle
         public enum DVEEffect
         {
             // TODO 
-            PushRight
+            PushRight,
+            SwooshTopRight,
         }
 
         [XmlAttribute("rate")]

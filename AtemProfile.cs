@@ -10,10 +10,10 @@ namespace AtemEmulator.State
     public class AtemProfile
     {
         [XmlAttribute("majorVersion")]
-        public string MajorVersion { get; set; }
+        public int MajorVersion { get; set; }
 
         [XmlAttribute("minorVersion")]
-        public string MinorVersion { get; set; }
+        public int MinorVersion { get; set; }
 
         [XmlAttribute("product")]
         public string Product { get; set; }
@@ -27,6 +27,12 @@ namespace AtemEmulator.State
         public List<Auxiliary> Auxiliaries { get; set; }
 
         public AtemSettings Settings { get; set; }
+
+        public List<HyperDeck> HyperDecks { get; set; }
+        public bool ShouldSerializeHyperDecks()
+        {
+            return HyperDecks != null && HyperDecks.Count > 0;
+        }
 
         public AudioMixer AudioMixer { get; set; }
 

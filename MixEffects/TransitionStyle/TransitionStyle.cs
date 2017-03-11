@@ -10,7 +10,7 @@ namespace AtemEmulator.State.MixEffects.TransitionStyle
             Dip,
             Wipe,
             DVE,
-            Sting
+            Stinger
         }
 
         [XmlAttribute("style")]
