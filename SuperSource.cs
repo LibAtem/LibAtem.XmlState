@@ -53,8 +53,6 @@ namespace AtemEmulator.State
         public double BorderSoftnessOut { get; set; }
         [XmlAttribute("borderSoftnessIn")]
         public double BorderSoftnessIn { get; set; }
-        [XmlAttribute("borderBevelOpacity")]
-        public double BorderBevelOpacity { get; set; }
         [XmlAttribute("borderBevelPosition")]
         public double BorderBevelPosition { get; set; }
         [XmlAttribute("borderBevelSoftness")]

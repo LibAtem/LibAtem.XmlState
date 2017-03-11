@@ -40,6 +40,8 @@ namespace AtemEmulator.State
 
         [XmlArrayItem("Macro")]
         public List<Macro> MacroPool { get; set; }
+
+        public MacroControl MacroControl { get; set; }
     }
 
     public enum AtemBool

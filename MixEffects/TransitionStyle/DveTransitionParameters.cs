@@ -19,8 +19,8 @@ namespace AtemEmulator.State.MixEffects.TransitionStyle
         [XmlAttribute("reverseDirection")]
         public AtemBool ReverseDirection { get; set; }
 
-        [XmlAttribute("flipFlip")]
-        public AtemBool FlipFlip { get; set; }
+        [XmlAttribute("flipFlop")]
+        public AtemBool FlipFlop { get; set; }
 
         [XmlAttribute("effect")]
         public DVEEffect Effect { get; set; }

@@ -43,8 +43,8 @@ namespace AtemEmulator.State
 
     public class AudioMonitorOutput
     {
-        [XmlAttribute("id")]
-        public int Id { get; set; }
+        [XmlAttribute("index")]
+        public int Index { get; set; }
 
         [XmlAttribute("gain")]
         public double Gain { get; set; }

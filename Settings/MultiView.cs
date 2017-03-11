@@ -11,6 +11,7 @@ namespace AtemEmulator.State.Settings
         [XmlAttribute("layout")]
         public MultiViewLayout Layout { get; set; }
 
+        [XmlArrayItem("Window")]
         public List<MultiViewWindow> Windows { get; set; }
     }
 

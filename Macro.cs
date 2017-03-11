@@ -84,6 +84,11 @@ namespace AtemEmulator.State
                     return false;
             }
         }
+    }
 
+    public class MacroControl
+    {
+        [XmlAttribute("loop")]
+        public AtemBool Loop { get; set; }
     }
 }

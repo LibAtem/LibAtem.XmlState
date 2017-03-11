@@ -38,43 +38,137 @@ namespace AtemEmulator.State
         [XmlAttribute("category")]
         public CameraControlParameterCategory Category { get; set; }
         [XmlAttribute("parameter")]
-        public CameraControlParameterParameter Paremeter { get; set; }
+        public CameraControlParameterParameter Parameter { get; set; }
 
         [XmlAttribute("value")]
         public double Value { get; set; }
+        public bool ShouldSerializeValue()
+        {
+            switch (Parameter)
+            {
+                case CameraControlParameterParameter.ApertureNormalised:
+                case CameraControlParameterParameter.SensorGain:
+                case CameraControlParameterParameter.ManualWhiteBalance:
+                case CameraControlParameterParameter.Exposure:
+                case CameraControlParameterParameter.DetailLevel:
+                case CameraControlParameterParameter.LumaMix:
+                    return true;
+                default:
+                    return false;
+            }
+        }
 
         [XmlAttribute("red")]
         public double Red { get; set; }
+        public bool ShouldSerializeRed()
+        {
+            switch (Parameter)
+            {
+                case CameraControlParameterParameter.LiftAdjust:
+                case CameraControlParameterParameter.GammaAdjust:
+                case CameraControlParameterParameter.GainAdjust:
+                case CameraControlParameterParameter.OffsetAdjust:
+                    return true;
+                default:
+                    return false;
+            }
+        }
         [XmlAttribute("green")]
         public double Green { get; set; }
+        public bool ShouldSerializeGreen()
+        {
+            switch (Parameter)
+            {
+                case CameraControlParameterParameter.LiftAdjust:
+                case CameraControlParameterParameter.GammaAdjust:
+                case CameraControlParameterParameter.GainAdjust:
+                case CameraControlParameterParameter.OffsetAdjust:
+                    return true;
+                default:
+                    return false;
+            }
+        }
         [XmlAttribute("blue")]
         public double Blue { get; set; }
+        public bool ShouldSerializeBlue()
+        {
+            switch (Parameter)
+            {
+                case CameraControlParameterParameter.LiftAdjust:
+                case CameraControlParameterParameter.GammaAdjust:
+                case CameraControlParameterParameter.GainAdjust:
+                case CameraControlParameterParameter.OffsetAdjust:
+                    return true;
+                default:
+                    return false;
+            }
+        }
         [XmlAttribute("luma")]
         public double Luma { get; set; }
+        public bool ShouldSerializeLuma()
+        {
+            switch (Parameter)
+            {
+                case CameraControlParameterParameter.LiftAdjust:
+                case CameraControlParameterParameter.GammaAdjust:
+                case CameraControlParameterParameter.GainAdjust:
+                case CameraControlParameterParameter.OffsetAdjust:
+                    return true;
+                default:
+                    return false;
+            }
+        }
 
         [XmlAttribute("pivot")]
         public double Pivot { get; set; }
+        public bool ShouldSerializePivot()
+        {
+            switch (Parameter)
+            {
+                case CameraControlParameterParameter.ContrastAdjust:
+                    return true;
+                default:
+                    return false;
+            }
+        }
         [XmlAttribute("adjust")]
         public double Adjust { get; set; }
+        public bool ShouldSerializeAdjust()
+        {
+            switch (Parameter)
+            {
+                case CameraControlParameterParameter.ContrastAdjust:
+                    return true;
+                default:
+                    return false;
+            }
+        }
 
         [XmlAttribute("hue")]
         public double Hue { get; set; }
+        public bool ShouldSerializeHue()
+        {
+            switch (Parameter)
+            {
+                case CameraControlParameterParameter.ColorAdjust:
+                    return true;
+                default:
+                    return false;
+            }
+        }
         [XmlAttribute("saturation")]
         public double Saturation { get; set; }
+        public bool ShouldSerializeSaturation()
+        {
+            switch (Parameter)
+            {
+                case CameraControlParameterParameter.ColorAdjust:
+                    return true;
+                default:
+                    return false;
+            }
+        }
     }
-
-    /*<Parameter device = "1" category="Lens" parameter="ApertureNormalised" value="0.5"/>
-        <Parameter device = "1" category="Video" parameter="SensorGain" value="2"/>
-        <Parameter device = "1" category="Video" parameter="ManualWhiteBalance" value="5600"/>
-        <Parameter device = "1" category="Video" parameter="Exposure" value="20000"/>
-        <Parameter device = "1" category="Video" parameter="DetailLevel" value="1"/>
-        <Parameter device = "1" category="ColorCorrection" parameter="LiftAdjust" red="0" green="0" blue="0" luma="0"/>
-        <Parameter device = "1" category="ColorCorrection" parameter="GammaAdjust" red="0" green="0" blue="0" luma="0"/>
-        <Parameter device = "1" category="ColorCorrection" parameter="GainAdjust" red="1" green="1" blue="1" luma="1"/>
-        <Parameter device = "1" category="ColorCorrection" parameter="OffsetAdjust" red="0" green="0" blue="0" luma="0"/>
-        <Parameter device = "1" category="ColorCorrection" parameter="ContrastAdjust" pivot="0.5" adjust="1"/>
-        <Parameter device = "1" category="ColorCorrection" parameter="LumaMix" value="1"/>
-        <Parameter device = "1" category="ColorCorrection" parameter="ColorAdjust" hue="0" saturation="1"/>*/
 
     public enum CameraControlParameterCategory
     {

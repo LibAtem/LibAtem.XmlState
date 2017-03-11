@@ -5,6 +5,7 @@ namespace AtemEmulator.State.Settings
 {
     public class MediaPoolSettings
     {
+        [XmlArrayItem("Clip")]
         public List<MediaPoolClipSettings> Clips { get; set; }
     }
 
