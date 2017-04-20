@@ -30,6 +30,11 @@ namespace AtemEmulator.State
 
         SuperSourceArtFillInput,
         SuperSourceBoxEnable,
+
+        AuxiliaryInput,
+        ProgramInput,
+
+        AudioMixerInputGain,
     }
 
     public class MacroOperation
@@ -101,6 +106,8 @@ namespace AtemEmulator.State
             switch (Id)
             {
                 case MacroOperationType.SuperSourceArtFillInput:
+                case MacroOperationType.AuxiliaryInput:
+                case MacroOperationType.ProgramInput:
                     return true;
                 default:
                     return false;
@@ -132,6 +139,19 @@ namespace AtemEmulator.State
                     return false;
             }
         }
+
+        [XmlAttribute("gain")]
+        public int Gain { get; set; }
+        public bool ShouldSerializeGain()
+        {
+            switch (Id)
+            {
+                case MacroOperationType.AudioMixerInputGain:
+                    return true;
+                default:
+                    return false;
+            }
+        }
     }
 
     public enum MacroInput
@@ -156,6 +176,14 @@ namespace AtemEmulator.State
         Camera18 = 18,
         Camera19 = 19,
         Camera20 = 20,
+
+        Color1 = 2001,
+
+        MediaPlayer1 = 3010,
+
+        ME1Program = 10010,
+
+        ExternalXLR = 20000,
     }
 
     public class MacroControl

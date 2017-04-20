@@ -6,10 +6,10 @@ namespace AtemEmulator.State.MixEffects.Key
     {
         public enum KeyType
         {
-            Luma,
-            Chroma,
-            Pattern,
-            DVE
+            Luma = 0,
+            Chroma = 1,
+            Pattern = 2,
+            DVE = 3
         }
 
         [XmlAttribute("index")]

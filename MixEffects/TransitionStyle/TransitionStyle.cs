@@ -6,11 +6,11 @@ namespace AtemEmulator.State.MixEffects.TransitionStyle
     {
         public enum TStyle
         {
-            Mix,
-            Dip,
-            Wipe,
-            DVE,
-            Stinger
+            Mix = 0,
+            Dip = 1,
+            Wipe = 2,
+            DVE = 3,
+            Stinger = 4
         }
 
         [XmlAttribute("style")]

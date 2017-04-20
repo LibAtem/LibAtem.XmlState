@@ -7,15 +7,12 @@ namespace AtemEmulator.State
         CircleIris,
         // TODO
     }
-
-    public enum BorderStyle
-    {
-        None,
-        //TODO
-    }
-
+    
     public enum BorderBevel
     {
-        InOut,
+        None = 0,
+        InOut = 1,
+        In = 2,
+        Out = 3,
     }
 }

@@ -23,7 +23,7 @@ namespace AtemEmulator.State.MixEffects.TransitionStyle
         public AtemBool ReverseDirection { get; set; }
 
         [XmlAttribute("flipFlip")]
-        public AtemBool FlipFlip { get; set; }
+        public AtemBool FlipFlop { get; set; }
 
         [XmlAttribute("borderInput")]
         public VideoSource BorderInput { get; set; }

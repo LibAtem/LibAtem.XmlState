@@ -58,8 +58,9 @@ namespace AtemEmulator.State.Settings
 
     public enum DownConvertMode
     {
-        // TODO
-        CentreCut,
+        CentreCut = 0,
+        Letterbox = 1,
+        Anamorphic = 2,
     }
 
     public class MultiViewVideoMode
@@ -101,13 +102,31 @@ namespace AtemEmulator.State.Settings
         public string LongName { get; set; }
 
         [XmlAttribute("externalPortType")]
-        public PortType PortType { get; set; }
+        public ExternalPortType PortType { get; set; }
     }
 
-    public enum PortType
+    public enum ExternalPortType
     {
-        SDI,
-        HDMI,
+        Internal = 0,
+        SDI = 1,
+        HDMI = 2,
+        Composite = 3,
+        Component = 4,
+        SVideo = 5,
+    }
+    public enum InternalPortType
+    {
+        External = 0,
+        Black = 1,
+        ColorBars = 2,
+        ColorGenertor = 3,
+        MediaPlayereFill = 4,
+        MediaPlayerKey = 5,
+        SuperSource = 6,
+
+        MEOutput = 128,
+        Auxilary = 129,
+        Mask = 130,
     }
 
     public class ButtonMap

@@ -55,4 +55,12 @@ namespace AtemEmulator.State
         False,
         True,
     }
+
+    public static class AtemBoolExtensions
+    {
+        public static bool Value(this AtemBool val)
+        {
+            return val == AtemBool.True;
+        }
+    }
 }

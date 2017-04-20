@@ -20,20 +20,20 @@ namespace AtemEmulator.State.MixEffects.Key
         public AtemBool ShadowEnabled { get; set; }
 
         [XmlAttribute("lightSourceDirection")]
-        public int LightSourceDirection { get; set; }
+        public double LightSourceDirection { get; set; }
         [XmlAttribute("lightSourceAltitude")]
-        public int LightSourceAltitude { get; set; }
+        public double LightSourceAltitude { get; set; }
 
         [XmlAttribute("borderEnabled")]
         public AtemBool BorderEnabled { get; set; }
         [XmlAttribute("borderStyle")]
-        public BorderStyle BorderStyle { get; set; }
+        public BorderBevel BorderStyle { get; set; }
         [XmlAttribute("borderBevelHue")]
-        public int BorderBevelHue { get; set; }
+        public double BorderBevelHue { get; set; }
         [XmlAttribute("borderBevelSaturation")]
-        public int BorderBevelSaturation { get; set; }
+        public double BorderBevelSaturation { get; set; }
         [XmlAttribute("borderBevelLuma")]
-        public int BorderBevelLuma { get; set; }
+        public double BorderBevelLuma { get; set; }
 
         [XmlAttribute("borderWidthOut")]
         public double BorderWidthOut { get; set; }

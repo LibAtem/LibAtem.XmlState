@@ -26,10 +26,10 @@ namespace AtemEmulator.State.Settings
 
     public enum MultiViewLayout
     {
-        ProgramTop,
-        ProgramBottom,
-        ProgramLeft,
-        ProgramRight
+        ProgramTop = 0,
+        ProgramBottom = 1,
+        ProgramLeft = 2,
+        ProgramRight = 3,
     }
 
     public class MultiViewWindow
