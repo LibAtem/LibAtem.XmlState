@@ -13,10 +13,10 @@ namespace AtemEmulator.State
         public VideoSource KeySource { get; set; }
 
         [XmlAttribute("rate")]
-        public int Rate { get; set; }
+        public uint Rate { get; set; }
 
         [XmlAttribute("maskEnabled")]
-        public AtemBool MastEnabled { get; set; }
+        public AtemBool MaskEnabled { get; set; }
 
         [XmlAttribute("maskTop")]
         public double MaskTop { get; set; }
