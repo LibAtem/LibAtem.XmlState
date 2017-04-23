@@ -5,15 +5,15 @@ namespace AtemEmulator.State
     public class ColorGenerator
     {
         [XmlAttribute("index")]
-        public int Index { get; set; }
+        public uint Index { get; set; }
         
         [XmlAttribute("hue")]
-        public int Hue { get; set; }
+        public double Hue { get; set; }
 
         [XmlAttribute("saturation")]
-        public int Saturation { get; set; }
+        public double Saturation { get; set; }
 
         [XmlAttribute("luma")]
-        public int Luma { get; set; }
+        public double Luma { get; set; }
     }
 }
