@@ -5,7 +5,7 @@ namespace AtemEmulator.State.MixEffects.TransitionStyle
     public class DipTransitionParameters
     {
         [XmlAttribute("rate")]
-        public int Rate { get; set; }
+        public uint Rate { get; set; }
 
         [XmlAttribute("input")]
         public VideoSource Input { get; set; }

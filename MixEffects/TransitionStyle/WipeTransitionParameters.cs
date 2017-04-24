@@ -5,7 +5,7 @@ namespace AtemEmulator.State.MixEffects.TransitionStyle
     public class WipeTransitionParameters
     {
         [XmlAttribute("rate")]
-        public int Rate { get; set; }
+        public uint Rate { get; set; }
 
         [XmlAttribute("pattern")]
         public Pattern Pattern { get; set; }

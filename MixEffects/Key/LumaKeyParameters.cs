@@ -14,6 +14,6 @@ namespace AtemEmulator.State.MixEffects.Key
         public double Gain { get; set; }
 
         [XmlAttribute("inverse")]
-        public AtemBool Inverse { get; set; }
+        public AtemBool Invert { get; set; }
     }
 }

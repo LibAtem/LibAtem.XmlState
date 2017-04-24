@@ -18,16 +18,16 @@ namespace AtemEmulator.State.MixEffects.Key
         [XmlAttribute("type")]
         public KeyType Type { get; set; }
 
-        [XmlAttribute("inputCut")]
-        public VideoSource InputCut { get; set; }
         [XmlAttribute("inputFill")]
-        public VideoSource InputFill { get; set; }
+        public VideoSource FillSource { get; set; }
+        [XmlAttribute("inputCut")]
+        public VideoSource CutSource { get; set; }
 
         [XmlAttribute("onAir")]
         public AtemBool OnAir { get; set; }
 
         [XmlAttribute("masked")]
-        public AtemBool Masked { get; set; }
+        public AtemBool MaskEnabled { get; set; }
 
         [XmlAttribute("maskTop")]
         public double MaskTop { get; set; }

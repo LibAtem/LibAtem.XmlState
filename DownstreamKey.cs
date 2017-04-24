@@ -10,7 +10,7 @@ namespace AtemEmulator.State
         [XmlAttribute("fillSource")]
         public VideoSource FillSource { get; set; }
         [XmlAttribute("keySource")]
-        public VideoSource KeySource { get; set; }
+        public VideoSource CutSource { get; set; }
 
         [XmlAttribute("rate")]
         public uint Rate { get; set; }
