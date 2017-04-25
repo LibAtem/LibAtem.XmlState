@@ -31,7 +31,7 @@ namespace AtemEmulator.State.MixEffects
     public class FadeToBlack
     {
         [XmlAttribute("rate")]
-        public int Rate { get; set; }
+        public uint Rate { get; set; }
 
         [XmlAttribute("isFullyBlack")]
         public AtemBool IsFullyBlack { get; set; }
