@@ -93,7 +93,7 @@ namespace AtemEmulator.State.Settings
     public class Input
     {
         [XmlAttribute("id")]
-        public int Id { get; set; }
+        public VideoSource Id { get; set; }
 
         [XmlAttribute("shortName")]
         public string ShortName { get; set; }

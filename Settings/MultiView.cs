@@ -6,7 +6,7 @@ namespace AtemEmulator.State.Settings
     public class MultiView
     {
         [XmlAttribute("index")]
-        public int Index { get; set; }
+        public uint Index { get; set; }
 
         [XmlAttribute("layout")]
         public MultiViewLayout Layout { get; set; }
@@ -35,7 +35,7 @@ namespace AtemEmulator.State.Settings
     public class MultiViewWindow
     {
         [XmlAttribute("index")]
-        public int Index { get; set; }
+        public uint Index { get; set; }
 
         [XmlAttribute("input")]
         public VideoSource Input { get; set; }

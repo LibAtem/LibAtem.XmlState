@@ -4,8 +4,8 @@ namespace AtemEmulator.State.Media
 {
     public enum MediaPlayerSource
     {
+        Clip,
         Still,
-        Clip
     }
 
     public class MediaPlayer
@@ -17,7 +17,7 @@ namespace AtemEmulator.State.Media
         public MediaPlayerSource SourceType { get; set; }
 
         [XmlAttribute("sourceIndex")]
-        public int SourceIndex { get; set; }
+        public uint SourceIndex { get; set; }
 
         [XmlAttribute("playing")]
         public AtemBool Playing { get; set; }
