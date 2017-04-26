@@ -7,7 +7,7 @@ using AtemEmulator.State.Settings;
 namespace AtemEmulator.State
 {
     [XmlRoot("Profile", IsNullable = false)]
-    public class AtemProfile
+    public class PersistedState
     {
         [XmlAttribute("majorVersion")]
         public int MajorVersion { get; set; }
