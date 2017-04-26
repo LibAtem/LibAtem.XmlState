@@ -119,8 +119,8 @@ namespace AtemEmulator.State.Settings
         External = 0,
         Black = 1,
         ColorBars = 2,
-        ColorGenertor = 3,
-        MediaPlayereFill = 4,
+        ColorGenerator = 3,
+        MediaPlayerFill = 4,
         MediaPlayerKey = 5,
         SuperSource = 6,
 
