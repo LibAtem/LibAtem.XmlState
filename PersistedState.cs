@@ -67,5 +67,10 @@ namespace AtemEmulator.State
         {
             return val ? AtemBool.True : AtemBool.False;
         }
+
+        public static AtemBool Invert(this AtemBool val)
+        {
+            return val == AtemBool.True ? AtemBool.False : AtemBool.True;
+        }
     }
 }

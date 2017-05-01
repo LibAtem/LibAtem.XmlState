@@ -6,6 +6,15 @@ namespace AtemEmulator.State.MixEffects
 {
     public class MixEffectBlock
     {
+        public MixEffectBlock()
+        {
+        }
+
+        public MixEffectBlock(MixEffectBlockId id)
+        {
+            Index = id;
+        }
+
         public class ProgamPreview
         {
             [XmlAttribute("input")]
