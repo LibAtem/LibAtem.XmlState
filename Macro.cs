@@ -93,6 +93,7 @@ namespace AtemEmulator.State
             switch (Id)
             {
                 case MacroOperationType.CutTransition:
+                case MacroOperationType.ProgramInput:
                     return true;
                 default:
                     return false;
@@ -108,6 +109,20 @@ namespace AtemEmulator.State
                 case MacroOperationType.SuperSourceArtFillInput:
                 case MacroOperationType.AuxiliaryInput:
                 case MacroOperationType.ProgramInput:
+                case MacroOperationType.AudioMixerInputGain:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        [XmlAttribute("auxiliaryIndex")]
+        public uint AuxiliaryIndex { get; set; }
+        public bool ShouldSerializeAuxiliaryIndex()
+        {
+            switch (Id)
+            {
+                case MacroOperationType.AuxiliaryInput:
                     return true;
                 default:
                     return false;

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Xml.Serialization;
 
 namespace AtemEmulator.State
@@ -6,6 +8,13 @@ namespace AtemEmulator.State
     public class AudioMixer
     {
         [XmlAttribute("programOutGain")]
+        public string ProgramOutGainXmlString
+        {
+            get => double.IsNegativeInfinity(ProgramOutGain) ? "-inf" : ProgramOutGain.ToString(CultureInfo.InvariantCulture);
+            set => ProgramOutGain = value == "-inf" ? double.NegativeInfinity : double.Parse(value);
+        }
+
+        [XmlIgnore]
         public double ProgramOutGain { get; set; }
 
         [XmlAttribute("programOutBalance")]
@@ -28,17 +37,24 @@ namespace AtemEmulator.State
         public MixOption MixOption { get; set; }
 
         [XmlAttribute("gain")]
+        public string GainXmlString
+        {
+            get => double.IsNegativeInfinity(Gain) ? "-inf" : Gain.ToString(CultureInfo.InvariantCulture);
+            set => Gain = value == "-inf" ? double.NegativeInfinity : double.Parse(value);
+        }
+
+        [XmlIgnore]
         public double Gain { get; set; }
 
         [XmlAttribute("balance")]
         public double Balance { get; set; }
     }
-
+    
     public enum MixOption
     {
-        Off,
-        On,
-        AudioFollowVideo
+        Off = 0,
+        On = 1,
+        AudioFollowVideo = 2
     }
 
     public class AudioMonitorOutput
