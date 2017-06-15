@@ -254,6 +254,53 @@ namespace AtemEmulator.State
         ME2Prev = 10021,
     }
 
+    public static class VideoSourceLists
+    {
+        public static VideoSource[] ColorGenerators => new[]
+        {
+            VideoSource.Color1,
+            VideoSource.Color2,
+        };
+
+        public static VideoSource[] MediaPlayers => new[]
+        {
+            VideoSource.MediaPlayer1,
+            VideoSource.MediaPlayer2,
+        };
+
+        public static VideoSource[] MediaPlayerKeys => new[]
+        {
+            VideoSource.MediaPlayer1Key,
+            VideoSource.MediaPlayer2Key,
+        };
+
+        public static VideoSource[] UpstreamKeyMasks => new[]
+        {
+            VideoSource.Key1Mask,
+            VideoSource.Key2Mask,
+            VideoSource.Key3Mask,
+            VideoSource.Key4Mask,
+        };
+
+        public static VideoSource[] DownstreamKeyMasks => new[]
+        {
+            VideoSource.DSK1Mask,
+            VideoSource.DSK2Mask,
+        };
+
+        public static VideoSource[] MixEffectPrograms => new[]
+        {
+            VideoSource.ME1Prog,
+            VideoSource.ME2Prog,
+        };
+
+        public static VideoSource[] MixEffectPreviews => new[]
+        {
+            VideoSource.ME1Prev,
+            VideoSource.ME2Prev,
+        };
+    }
+
     public static class VideoSourceExtensions
     {
         public static bool IsAvailable(this VideoSource src, DeviceProfile profile)

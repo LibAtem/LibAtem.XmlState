@@ -4,8 +4,8 @@ namespace AtemEmulator.State.Media
 {
     public enum MediaPlayerSource
     {
-        Clip,
-        Still,
+        Clip  = 0,
+        Still = 1,
     }
 
     public class MediaPlayer
