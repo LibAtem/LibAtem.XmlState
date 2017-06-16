@@ -1,5 +1,6 @@
 using System;
 using System.Xml.Serialization;
+using AtemEmulator.State.Settings;
 
 namespace AtemEmulator.State
 {
@@ -68,19 +69,24 @@ namespace AtemEmulator.State
 
         [XmlEnum("1001")]
         [AudioSourceType(AudioSourceType.ExternalAudio)]
+        [AudioPortType(AudioPortType.XLR)]
         XLR = 1001,
         [XmlEnum("1101")]
         [AudioSourceType(AudioSourceType.ExternalAudio)]
+        [AudioPortType(AudioPortType.AESEBU)]
         AESEBU = 1101,
         [XmlEnum("1201")]
         [AudioSourceType(AudioSourceType.ExternalAudio)]
+        [AudioPortType(AudioPortType.RCA)]
         RCA = 1201,
 
         [XmlEnum("2001")]
         [AudioSourceType(AudioSourceType.MediaPlayer)]
+        [AudioPortType(AudioPortType.Internal)]
         MP1 = 2001,
         [XmlEnum("2002")]
         [AudioSourceType(AudioSourceType.MediaPlayer)]
+        [AudioPortType(AudioPortType.Internal)]
         MP2 = 2002,
     }
 
@@ -99,5 +105,35 @@ namespace AtemEmulator.State
         {
             Type = type;
         }
+    }
+
+    public class AudioPortTypeAttribute : Attribute
+    {
+        public AudioPortType Type { get; }
+
+        public AudioPortTypeAttribute(AudioPortType type)
+        {
+            Type = type;
+        }
+    }
+
+    public static class AudioSourceExtensions
+    {
+        public static VideoSource? GetVideoSource(this AudioSource src)
+        {
+            if ((int) src <= 20)
+                return (VideoSource) src;
+            
+            switch (src)
+            {
+                case AudioSource.MP1:
+                   return VideoSource.MediaPlayer1;
+                case AudioSource.MP2:
+                    return VideoSource.MediaPlayer2;
+                default:
+                    return null;
+            }
+        }
+        
     }
 }

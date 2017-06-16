@@ -184,7 +184,7 @@ namespace AtemEmulator.State
         [XmlEnum("5020")]
         DSK2Mask = 5020,
 
-        [VideoSourceType(InternalPortType.SuperSource, 0)]
+        [VideoSourceType(InternalPortType.SuperSource, 1)]
         [VideoSourceAvailability(SourceAvailability.Auxilary | SourceAvailability.Multiviewer | SourceAvailability.KeySource, MeAvailability.All)]
         [VideoSourceDefaults("Super Source", "SSrc")]
         [XmlEnum("6000")]
@@ -320,7 +320,7 @@ namespace AtemEmulator.State
                 case InternalPortType.MEOutput:
                     return props.Index <= profile.MixEffectBlocks;
                 case InternalPortType.Mask:
-                    return true; // TODO
+                    return props.Index <= profile.UpstreamKeys;
                 case InternalPortType.MediaPlayerFill:
                 case InternalPortType.MediaPlayerKey:
                     return props.Index <= profile.MediaPlayers;

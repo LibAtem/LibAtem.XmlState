@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Xml.Serialization;
 
 namespace AtemEmulator.State.Settings
@@ -127,6 +128,44 @@ namespace AtemEmulator.State.Settings
         MEOutput = 128,
         Auxilary = 129,
         Mask = 130,
+    }
+
+    public enum AudioPortType
+    {
+        Internal = 0,
+        SDI = 1,
+        HDMI = 2,
+        Component = 3,
+        Composite = 4,
+        SVideo = 5,
+        XLR = 32,
+        AESEBU = 64,
+        RCA = 128,
+    }
+
+    public static class ExternalPortTypeExtensions
+    {
+        public static AudioPortType GetAudioPortType(this ExternalPortType type)
+        {
+            switch (type)
+            {
+                case ExternalPortType.Internal:
+                    return AudioPortType.Internal;
+                case ExternalPortType.SDI:
+                    return AudioPortType.SDI;
+                case ExternalPortType.HDMI:
+                    return AudioPortType.HDMI;
+                case ExternalPortType.Component:
+                    return AudioPortType.Component;
+                case ExternalPortType.Composite:
+                    return AudioPortType.Composite;
+                case ExternalPortType.SVideo:
+                    return AudioPortType.SVideo;
+                default:
+                    Debug.Fail(string.Format("Unhandled ExternalPortType {0}", type));
+                    return AudioPortType.Internal;
+            }
+        }   
     }
 
     public class ButtonMap

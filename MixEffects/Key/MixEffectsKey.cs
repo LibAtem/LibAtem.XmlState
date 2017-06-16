@@ -16,7 +16,7 @@ namespace AtemEmulator.State.MixEffects.Key
         public int Index { get; set; }
 
         [XmlAttribute("type")]
-        public KeyType Type { get; set; }
+        public KeyType Mode { get; set; }
 
         [XmlAttribute("inputFill")]
         public VideoSource FillSource { get; set; }
