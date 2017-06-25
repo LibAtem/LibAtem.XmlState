@@ -5,7 +5,7 @@ namespace AtemEmulator.State
     public class HyperDeck
     {
         [XmlAttribute("id")]
-        public int Id { get; set; }
+        public uint Id { get; set; }
 
         [XmlAttribute("networkAddress")]
         public string NetworkAddress { get; set; }
@@ -17,6 +17,6 @@ namespace AtemEmulator.State
         public AtemBool AutoRoll { get; set; }
 
         [XmlAttribute("autoRollFrameDelay")]
-        public int AutoRollFrameDelay { get; set; }
+        public uint AutoRollFrameDelay { get; set; }
     }
 }

@@ -193,6 +193,7 @@ namespace AtemEmulator.State
         ManualWhiteBalance,
         [CameraControlParameterValue(CameraControlParameterCategory.Video, 5)]
         Exposure, // aka Exposure
+        [CameraControlParameterValue(CameraControlParameterCategory.Video, 8)] // TODO - check this is the correct value
         DetailLevel,
 
         [CameraControlParameterValue(CameraControlParameterCategory.ColorCorrection, 0)]
