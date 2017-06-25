@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Xml.Serialization;
 using AtemEmulator.State.Settings;
 using AtemEmulator.Util;
@@ -256,6 +257,12 @@ namespace AtemEmulator.State
 
     public static class VideoSourceLists
     {
+        public static VideoSource[] All => Enum.GetValues(typeof(VideoSource)).OfType<VideoSource>().ToArray();
+
+        public static VideoSource[] Inputs => All
+            .Where(s =>s.GetPortType() == InternalPortType.External)
+            .ToArray();
+
         public static VideoSource[] ColorGenerators => new[]
         {
             VideoSource.Color1,
@@ -303,6 +310,11 @@ namespace AtemEmulator.State
 
     public static class VideoSourceExtensions
     {
+        public static InternalPortType GetPortType(this VideoSource src)
+        {
+            return src.GetAttribute<VideoSource, VideoSourceTypeAttribute>().PortType;
+        }
+
         public static bool IsAvailable(this VideoSource src, DeviceProfile profile)
         {
             VideoSourceTypeAttribute props = src.GetAttribute<VideoSource, VideoSourceTypeAttribute>();

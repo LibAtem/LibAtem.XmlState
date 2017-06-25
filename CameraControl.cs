@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
+using AtemEmulator.Util;
 
 namespace AtemEmulator.State
 {
@@ -15,13 +17,13 @@ namespace AtemEmulator.State
     public class CameraControlProperty
     {
         [XmlAttribute("device")]
-        public int Device { get; set; }
+        public VideoSource Device { get; set; }
 
         [XmlAttribute("property")]
         public CameraControlPropertyProperty Property { get; set; }
 
         [XmlAttribute("value")]
-        public string PrValueoperty { get; set; }
+        public string Value { get; set; }
     }
 
     public enum CameraControlPropertyProperty
@@ -33,7 +35,7 @@ namespace AtemEmulator.State
     public class CameraControlParameter
     {
         [XmlAttribute("device")]
-        public int Device { get; set; }
+        public VideoSource Device { get; set; }
 
         [XmlAttribute("category")]
         public CameraControlParameterCategory Category { get; set; }
@@ -172,23 +174,77 @@ namespace AtemEmulator.State
 
     public enum CameraControlParameterCategory
     {
-        Lens,
-        Video,
-        ColorCorrection,
+        Lens = 0,
+        Video = 1,
+        Unknown = 4,
+        ColorCorrection = 8, // aka Chip
+        Unknown2 = 11,
     }
     public enum CameraControlParameterParameter
     {
+        Unknown = 0,
+
         ApertureNormalised,
+        
+
+        [CameraControlParameterValue(CameraControlParameterCategory.Video, 1)]
         SensorGain,
+        [CameraControlParameterValue(CameraControlParameterCategory.Video, 2)]
         ManualWhiteBalance,
-        Exposure,
+        [CameraControlParameterValue(CameraControlParameterCategory.Video, 5)]
+        Exposure, // aka Exposure
         DetailLevel,
+
+        [CameraControlParameterValue(CameraControlParameterCategory.ColorCorrection, 0)]
         LiftAdjust,
+        [CameraControlParameterValue(CameraControlParameterCategory.ColorCorrection, 1)]
         GammaAdjust,
+        [CameraControlParameterValue(CameraControlParameterCategory.ColorCorrection, 2)]
         GainAdjust,
-        OffsetAdjust,
+        [CameraControlParameterValue(CameraControlParameterCategory.ColorCorrection, 3)]
+        OffsetAdjust, // aka Aperture
+        [CameraControlParameterValue(CameraControlParameterCategory.ColorCorrection, 4)]
         ContrastAdjust,
+        [CameraControlParameterValue(CameraControlParameterCategory.ColorCorrection, 5)]
         LumaMix,
+        [CameraControlParameterValue(CameraControlParameterCategory.ColorCorrection, 6)]
         ColorAdjust,
+
+        [CameraControlParameterValue(CameraControlParameterCategory.Unknown, 4)]
+        UnknownUnknown,
+        [CameraControlParameterValue(CameraControlParameterCategory.Unknown2, 0)]
+        Unknown2Unknown,
+
+    }
+
+    public static class CameraControlParameterParameterExtensions
+    {
+        public static uint GetValue(this CameraControlParameterParameter param)
+        {
+            var attr = param.GetAttribute<CameraControlParameterParameter, CameraControlParameterValueAttribute>();
+            return attr.Value;
+        }
+
+        public static bool IsSoemthing(this CameraControlParameterParameter param, CameraControlParameterCategory cat,
+            uint val)
+        {
+            var attr = param.GetPossibleAttribute<CameraControlParameterParameter, CameraControlParameterValueAttribute>();
+            if (attr == null)
+                return false;
+
+            return attr.Category == cat && attr.Value == val;
+        }
+    }
+
+    public class CameraControlParameterValueAttribute : Attribute
+    {
+        public CameraControlParameterCategory Category { get; }
+        public uint Value { get; }
+
+        public CameraControlParameterValueAttribute(CameraControlParameterCategory category, uint value)
+        {
+            Category = category;
+            Value = value;
+        }
     }
 }
