@@ -53,8 +53,8 @@ namespace AtemEmulator.State.Settings
 
     public enum SDI3GOutputLevel
     {
-        LevelA,
-        LevelB,
+        LevelA = 1,
+        LevelB = 0,
     }
 
     public enum DownConvertMode
