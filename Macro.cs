@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
+using AtemEmulator.State.MixEffects.TransitionStyle;
 
 namespace AtemEmulator.State
 {
@@ -24,17 +25,29 @@ namespace AtemEmulator.State
         MediaPlayerSourceClipIndex,
         MediaPlayerSourceClip,
         MediaPlayerPlay,
+        MediaPlayerGoToBeginning,
 
         MacroSleep,
         CutTransition,
+        AutoTransition,
+        FadeToBlackAuto,
+        TransitionStyle,
 
         SuperSourceArtFillInput,
         SuperSourceBoxEnable,
 
         AuxiliaryInput,
         ProgramInput,
+        PreviewInput,
 
         AudioMixerInputGain,
+
+        HyperDeckSetSourceClipIndex,
+        HyperDeckSetLoop,
+        HyperDeckSetSingleClip,
+        HyperDeckSetSpeed,
+        HyperDeckPlay,
+        HyperDeckStop,
     }
 
     public class MacroOperation
@@ -53,6 +66,7 @@ namespace AtemEmulator.State
                 case MacroOperationType.MediaPlayerSourceClipIndex:
                 case MacroOperationType.MediaPlayerSourceClip:
                 case MacroOperationType.MediaPlayerPlay:
+                case MacroOperationType.MediaPlayerGoToBeginning:
                     return true;
                 default:
                     return false;
@@ -93,7 +107,11 @@ namespace AtemEmulator.State
             switch (Id)
             {
                 case MacroOperationType.CutTransition:
+                case MacroOperationType.AutoTransition:
                 case MacroOperationType.ProgramInput:
+                case MacroOperationType.PreviewInput:
+                case MacroOperationType.FadeToBlackAuto:
+                case MacroOperationType.TransitionStyle:
                     return true;
                 default:
                     return false;
@@ -109,6 +127,7 @@ namespace AtemEmulator.State
                 case MacroOperationType.SuperSourceArtFillInput:
                 case MacroOperationType.AuxiliaryInput:
                 case MacroOperationType.ProgramInput:
+                case MacroOperationType.PreviewInput:
                 case MacroOperationType.AudioMixerInputGain:
                     return true;
                 default:
@@ -167,6 +186,93 @@ namespace AtemEmulator.State
                     return false;
             }
         }
+
+        [XmlAttribute("style")]
+        public TransitionStyle.TStyle TransitionStyle { get; set; }
+        public bool ShouldSerializeTransitionStyle()
+        {
+            switch (Id)
+            {
+                case MacroOperationType.TransitionStyle:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        #region HyperDeck
+
+        [XmlAttribute("hyperDeckIndex")]
+        public int HyperDeckIndex { get; set; }
+        public bool ShouldSerializeHyperDeckIndex()
+        {
+            switch (Id)
+            {
+                case MacroOperationType.HyperDeckSetSourceClipIndex:
+                case MacroOperationType.HyperDeckSetLoop:
+                case MacroOperationType.HyperDeckSetSingleClip:
+                case MacroOperationType.HyperDeckSetSpeed:
+                case MacroOperationType.HyperDeckPlay:
+                case MacroOperationType.HyperDeckStop:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        [XmlAttribute("clipIndex")]
+        public int HyperDeckClipIndex { get; set; }
+        public bool ShouldSerializeHyperDeckClipIndex()
+        {
+            switch (Id)
+            {
+                case MacroOperationType.HyperDeckSetSourceClipIndex:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        [XmlAttribute("loopEnabled")]
+        public AtemBool HyperDeckLoopEnabled { get; set; }
+        public bool ShouldSerializeHyperDeckLoopEnabled()
+        {
+            switch (Id)
+            {
+                case MacroOperationType.HyperDeckSetLoop:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        [XmlAttribute("singleClipEnabled")]
+        public AtemBool HyperDeckSingleClipEnabled { get; set; }
+        public bool ShouldSerializeHyperDeckSingleClipEnabled()
+        {
+            switch (Id)
+            {
+                case MacroOperationType.HyperDeckSetSingleClip:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        [XmlAttribute("speedPercent")]
+        public int HyperDeckSpeedPercent { get; set; }
+        public bool ShouldSerializeHyperDeckSpeedPercent()
+        {
+            switch (Id)
+            {
+                case MacroOperationType.HyperDeckSetSpeed:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        #endregion HyperDeck
     }
 
     public enum MacroInput

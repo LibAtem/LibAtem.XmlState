@@ -15,11 +15,25 @@ namespace AtemEmulator.State.MixEffects
             Key4 = 1 << 4,
         }
 
-        [XmlAttribute("selection")]
+        [XmlIgnore]
         public Transition Selection { get; set; }
 
-        [XmlAttribute("nextSelection")]
+        [XmlAttribute("selection")]
+        public string SelectionString
+        {
+            get => Selection.ToString();
+            set => Selection = (Transition) Enum.Parse(typeof(Transition), value);
+        }
+
+        [XmlIgnore]
         public Transition NextSelection { get; set; }
+
+        [XmlAttribute("nextSelection")]
+        public string NextSelectionString
+        {
+            get => NextSelection.ToString();
+            set => NextSelection = (Transition)Enum.Parse(typeof(Transition), value);
+        }
     }
 
 }
