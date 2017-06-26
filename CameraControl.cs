@@ -176,7 +176,7 @@ namespace AtemEmulator.State
     {
         Lens = 0,
         Video = 1,
-        Unknown = 4,
+        Misc = 4,
         ColorCorrection = 8, // aka Chip
         Unknown2 = 11,
     }
@@ -185,7 +185,16 @@ namespace AtemEmulator.State
         Unknown = 0,
 
         ApertureNormalised,
-        
+
+        [CameraControlParameterValue(CameraControlParameterCategory.Lens, 0)]
+        Focus,
+        [CameraControlParameterValue(CameraControlParameterCategory.Lens, 1)]
+        AutoFocus,
+        [CameraControlParameterValue(CameraControlParameterCategory.Lens, 3)]
+        Iris,
+        [CameraControlParameterValue(CameraControlParameterCategory.Lens, 9)]
+        Zoom,
+
 
         [CameraControlParameterValue(CameraControlParameterCategory.Video, 1)]
         SensorGain,
@@ -211,8 +220,8 @@ namespace AtemEmulator.State
         [CameraControlParameterValue(CameraControlParameterCategory.ColorCorrection, 6)]
         ColorAdjust,
 
-        [CameraControlParameterValue(CameraControlParameterCategory.Unknown, 4)]
-        UnknownUnknown,
+        [CameraControlParameterValue(CameraControlParameterCategory.Misc, 4)]
+        ColorBars,
         [CameraControlParameterValue(CameraControlParameterCategory.Unknown2, 0)]
         Unknown2Unknown,
 
