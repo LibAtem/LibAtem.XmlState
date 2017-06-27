@@ -153,6 +153,26 @@ namespace AtemEmulator.State
         [VideoSourceDefaults("Media Player 2 Key", "MP2K")]
         [XmlEnum("3021")]
         MediaPlayer2Key = 3021,
+        [VideoSourceType(InternalPortType.MediaPlayerFill, 3)]
+        [VideoSourceAvailability(SourceAvailability.All, MeAvailability.All)]
+        [VideoSourceDefaults("Media Player 3", "MP3")]
+        [XmlEnum("3030")]
+        MediaPlayer3 = 3030,
+        [VideoSourceType(InternalPortType.MediaPlayerKey, 3)]
+        [VideoSourceAvailability(SourceAvailability.All, MeAvailability.All)]
+        [VideoSourceDefaults("Media Player 3 Key", "MP3K")]
+        [XmlEnum("3031")]
+        MediaPlayer3Key = 3031,
+        [VideoSourceType(InternalPortType.MediaPlayerFill, 4)]
+        [VideoSourceAvailability(SourceAvailability.All, MeAvailability.All)]
+        [VideoSourceDefaults("Media Player 4", "MP4")]
+        [XmlEnum("3040")]
+        MediaPlayer4 = 3040,
+        [VideoSourceType(InternalPortType.MediaPlayerKey, 4)]
+        [VideoSourceAvailability(SourceAvailability.All, MeAvailability.All)]
+        [VideoSourceDefaults("Media Player 4 Key", "MP4K")]
+        [XmlEnum("3041")]
+        MediaPlayer4Key = 3041,
 
         [VideoSourceType(InternalPortType.Mask, 1)]
         [VideoSourceAvailability(SourceAvailability.Auxilary | SourceAvailability.Multiviewer)]
@@ -273,12 +293,16 @@ namespace AtemEmulator.State
         {
             VideoSource.MediaPlayer1,
             VideoSource.MediaPlayer2,
+            VideoSource.MediaPlayer3,
+            VideoSource.MediaPlayer4,
         };
 
         public static VideoSource[] MediaPlayerKeys => new[]
         {
             VideoSource.MediaPlayer1Key,
             VideoSource.MediaPlayer2Key,
+            VideoSource.MediaPlayer3Key,
+            VideoSource.MediaPlayer4Key,
         };
 
         public static VideoSource[] UpstreamKeyMasks => new[]

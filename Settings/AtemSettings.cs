@@ -93,6 +93,18 @@ namespace AtemEmulator.State.Settings
 
     public class Input
     {
+        public Input() : this(VideoSource.Input1, "Cam?", "Camera ?", ExternalPortType.SDI)
+        {
+        }
+
+        public Input(VideoSource id, string shortName, string longName, ExternalPortType type)
+        {
+            Id = id;
+            ShortName = shortName;
+            LongName = longName;
+            PortType = type;
+        }
+
         [XmlAttribute("id")]
         public VideoSource Id { get; set; }
 

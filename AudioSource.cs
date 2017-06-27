@@ -88,6 +88,14 @@ namespace AtemEmulator.State
         [AudioSourceType(AudioSourceType.MediaPlayer)]
         [AudioPortType(AudioPortType.Internal)]
         MP2 = 2002,
+        [XmlEnum("2003")]
+        [AudioSourceType(AudioSourceType.MediaPlayer)]
+        [AudioPortType(AudioPortType.Internal)]
+        MP3 = 2003,
+        [XmlEnum("2004")]
+        [AudioSourceType(AudioSourceType.MediaPlayer)]
+        [AudioPortType(AudioPortType.Internal)]
+        MP4 = 2004,
     }
 
     public enum AudioSourceType
@@ -130,6 +138,10 @@ namespace AtemEmulator.State
                    return VideoSource.MediaPlayer1;
                 case AudioSource.MP2:
                     return VideoSource.MediaPlayer2;
+                case AudioSource.MP3:
+                    return VideoSource.MediaPlayer3;
+                case AudioSource.MP4:
+                    return VideoSource.MediaPlayer4;
                 default:
                     return null;
             }

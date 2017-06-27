@@ -13,10 +13,28 @@ namespace AtemEmulator.State.MixEffects
         public MixEffectBlock(MixEffectBlockId id)
         {
             Index = id;
+
+            Program = new ProgramPreview(VideoSource.ColorBars);
+            Preview = new ProgramPreview(VideoSource.Input1);
+
+            NextTransition = new NextTransition();
+            TransitionStyle = new TransitionStyle.TransitionStyle();
+
+            Keys = new List<MixEffectsKey>();
+            FadeToBlack = new FadeToBlack();
         }
 
-        public class ProgamPreview
+        public class ProgramPreview
         {
+            public ProgramPreview() : this(VideoSource.Black)
+            {
+            }
+
+            public ProgramPreview(VideoSource input)
+            {
+                Input = input;
+            }
+
             [XmlAttribute("input")]
             public VideoSource Input { get; set; }
         }
@@ -24,8 +42,8 @@ namespace AtemEmulator.State.MixEffects
         [XmlAttribute("index")]
         public MixEffectBlockId Index { get; set; }
 
-        public ProgamPreview Program { get; set; }
-        public ProgamPreview Preview { get; set; }
+        public ProgramPreview Program { get; set; }
+        public ProgramPreview Preview { get; set; }
 
         public NextTransition NextTransition { get; set; }
 
@@ -39,6 +57,12 @@ namespace AtemEmulator.State.MixEffects
 
     public class FadeToBlack
     {
+        public FadeToBlack()
+        {
+            Rate = 50;
+            IsFullyBlack = AtemBool.False;
+        }
+
         [XmlAttribute("rate")]
         public uint Rate { get; set; }
 

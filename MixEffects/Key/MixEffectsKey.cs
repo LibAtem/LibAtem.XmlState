@@ -12,6 +12,28 @@ namespace AtemEmulator.State.MixEffects.Key
             DVE = 3
         }
 
+        public MixEffectsKey() : this(0)
+        {
+        }
+
+        public MixEffectsKey(int index)
+        {
+            Index = index;
+            Mode = KeyType.Luma;
+
+            FillSource = VideoSource.Black;
+            CutSource = VideoSource.Black;
+
+            OnAir = AtemBool.False;
+            MaskEnabled = AtemBool.False;
+
+            LumaParameters = new LumaKeyParameters();
+            ChromaParameters = new ChromaKeyParameters();
+            PatternParameters = new PatternKeyParameters();
+            DVEParameters = new DveKeyParameters();
+            FlyParameters = new FlyKeyParameters();
+        }
+
         [XmlAttribute("index")]
         public int Index { get; set; }
 

@@ -10,6 +10,17 @@ namespace AtemEmulator.State.Media
 
     public class MediaPlayer
     {
+        public MediaPlayer() : this(MediaPlayerId.One)
+        {
+        }
+
+        public MediaPlayer(MediaPlayerId index)
+        {
+            Index = index;
+            SourceType = MediaPlayerSource.Still;
+            SourceIndex = 0;
+        }
+
         [XmlAttribute("index")]
         public MediaPlayerId Index { get; set; }
 

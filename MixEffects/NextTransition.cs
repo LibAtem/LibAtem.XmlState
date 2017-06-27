@@ -15,6 +15,12 @@ namespace AtemEmulator.State.MixEffects
             Key4 = 1 << 4,
         }
 
+        public NextTransition()
+        {
+            Selection = Transition.Background;
+            NextSelection = Transition.Background;
+        }
+
         [XmlIgnore]
         public Transition Selection { get; set; }
 
