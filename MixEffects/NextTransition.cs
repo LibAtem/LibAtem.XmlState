@@ -8,6 +8,7 @@ namespace AtemEmulator.State.MixEffects
         [Flags]
         public enum Transition
         {
+            None = 0,
             Background = 1 << 0,
             Key1 = 1 << 1,
             Key2 = 1 << 2,

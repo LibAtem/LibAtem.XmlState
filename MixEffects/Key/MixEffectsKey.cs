@@ -30,8 +30,6 @@ namespace AtemEmulator.State.MixEffects.Key
             LumaParameters = new LumaKeyParameters();
             ChromaParameters = new ChromaKeyParameters();
             PatternParameters = new PatternKeyParameters();
-            DVEParameters = new DveKeyParameters();
-            FlyParameters = new FlyKeyParameters();
         }
 
         [XmlAttribute("index")]

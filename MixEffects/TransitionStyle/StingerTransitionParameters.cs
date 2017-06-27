@@ -26,7 +26,7 @@ namespace AtemEmulator.State.MixEffects.TransitionStyle
         public int TriggerPoint { get; set; }
 
         [XmlAttribute("mixRate")]
-        public int MixRate { get; set; }
+        public uint MixRate { get; set; }
 
         [XmlAttribute("preroll")]
         public int Preroll { get; set; }

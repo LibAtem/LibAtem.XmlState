@@ -13,6 +13,19 @@ namespace AtemEmulator.State.MixEffects.TransitionStyle
             Stinger = 4
         }
 
+        public TransitionStyle()
+        {
+            Style = TStyle.Mix;
+            NextStyle = TStyle.Mix;
+
+            PreviewTransition = AtemBool.False;
+            TransitionPosition = 0;
+
+            MixParameters = new MixTransitionParameters();
+            DipParameters = new DipTransitionParameters();
+            WipeParameters = new WipeTransitionParameters();
+        }
+
         [XmlAttribute("style")]
         public TStyle Style { get; set; }
 

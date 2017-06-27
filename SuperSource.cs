@@ -11,6 +11,13 @@ namespace AtemEmulator.State
 
     public class SuperSource
     {
+        public const int ExpectedBoxCount = 4;
+
+        public SuperSource()
+        {
+            Boxes = new List<SuperSourceBox>();
+        }
+
         [XmlAttribute("artFillInput")]
         public VideoSource ArtFillInput { get; set; }
 
@@ -69,6 +76,15 @@ namespace AtemEmulator.State
 
     public class SuperSourceBox
     {
+        public SuperSourceBox() : this(0)
+        {
+        }
+
+        public SuperSourceBox(int index)
+        {
+            Index = index;
+        }
+
         [XmlAttribute("index")]
         public int Index { get; set; }
 

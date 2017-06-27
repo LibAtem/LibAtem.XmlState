@@ -12,7 +12,7 @@ namespace AtemEmulator.State.MixEffects.TransitionStyle
         }
 
         [XmlAttribute("rate")]
-        public int Rate { get; set; }
+        public uint Rate { get; set; }
 
         [XmlAttribute("logoRate")]
         public int LogoRate { get; set; }

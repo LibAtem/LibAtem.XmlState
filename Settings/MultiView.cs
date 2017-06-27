@@ -5,6 +5,23 @@ namespace AtemEmulator.State.Settings
 {
     public class MultiView
     {
+        public const int WindowCount = 10;
+
+        public MultiView() : this(0)
+        {
+        }
+
+        public MultiView(uint index)
+        {
+            Index = index;
+            Layout = MultiViewLayout.ProgramTop;
+            VuMeterOpacity = 1;
+            SafeAreaEnabled = AtemBool.True;
+            ProgramPreviewSwapped = AtemBool.False;
+
+            Windows = new List<MultiViewWindow>();
+        }
+
         [XmlAttribute("index")]
         public uint Index { get; set; }
 
@@ -34,6 +51,17 @@ namespace AtemEmulator.State.Settings
 
     public class MultiViewWindow
     {
+        public MultiViewWindow():this(0, VideoSource.Input1)
+        {
+        }
+
+        public MultiViewWindow(uint index, VideoSource input)
+        {
+            Index = index;
+            Input = input;
+            VuMeterEnabled = AtemBool.True;
+        }
+
         [XmlAttribute("index")]
         public uint Index { get; set; }
 

@@ -57,13 +57,16 @@ namespace AtemEmulator.State.Media
 
     public class MediaPoolClip
     {
-        public MediaPoolClip()
+        public MediaPoolClip() : this(0)
         {
         }
 
         public MediaPoolClip(int index)
         {
             Index = index;
+            Name = string.Empty;
+            Frames = new List<MediaPoolFrame>();
+            Audio = new MediaPoolAudio();
         }
 
         [XmlAttribute("index")]
@@ -76,6 +79,10 @@ namespace AtemEmulator.State.Media
         public List<MediaPoolFrame> Frames { get; set; }
 
         public MediaPoolAudio Audio { get; set; }
+        public bool ShouldSerializeAudio()
+        {
+            return Audio != null && Audio.Name != null && Audio.Name != "";
+        }
     }
 
     public class MediaPoolFrame
@@ -89,6 +96,11 @@ namespace AtemEmulator.State.Media
 
     public class MediaPoolAudio
     {
+        public MediaPoolAudio()
+        {
+            Name = "";
+        }
+
         [XmlAttribute("name")]
         public string Name { get; set; }
 

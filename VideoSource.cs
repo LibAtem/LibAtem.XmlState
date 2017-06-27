@@ -422,12 +422,12 @@ namespace AtemEmulator.State
     [Flags]
     public enum SourceAvailability
     {
-        None = 1 << 0,
-        Auxilary = 1 << 1,
-        Multiviewer = 1 << 2,
-        SuperSourceArt = 1 << 3,
-        SuperSourceBox = 1 << 4,
-        KeySource = 1 << 5,
+        None = 0,
+        Auxilary = 1 << 0,
+        Multiviewer = 1 << 1,
+        SuperSourceArt = 1 << 2,
+        SuperSourceBox = 1 << 3,
+        KeySource = 1 << 4,
         All = Auxilary|Multiviewer|SuperSourceArt|SuperSourceBox|KeySource,
     }
 }
