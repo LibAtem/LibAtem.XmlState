@@ -9,6 +9,7 @@ namespace AtemEmulator.State.MixEffects.TransitionStyle
             // TODO 
             PushRight,
             SwooshTopRight,
+            SwooshLeft,
         }
 
         [XmlAttribute("rate")]

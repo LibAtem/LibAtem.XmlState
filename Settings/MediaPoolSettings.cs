@@ -20,7 +20,7 @@ namespace AtemEmulator.State.Settings
         {
         }
 
-        public MediaPoolClipSettings(int index, int maxFrames)
+        public MediaPoolClipSettings(int index, uint maxFrames)
         {
             Index = index;
             MaxFrameCount = maxFrames;
@@ -30,6 +30,6 @@ namespace AtemEmulator.State.Settings
         public int Index { get; set; }
 
         [XmlAttribute("maxFrameCount")]
-        public int MaxFrameCount { get; set; }
+        public uint MaxFrameCount { get; set; }
     }
 }
