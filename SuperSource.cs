@@ -5,8 +5,8 @@ namespace AtemEmulator.State
 { 
     public enum SuperSourceArtOption
     {
-        Foreground,
-        Background
+        Background = 0,
+        Foreground = 1
     }
 
     public class SuperSource
