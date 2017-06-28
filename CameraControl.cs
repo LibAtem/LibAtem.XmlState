@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using AtemEmulator.Util;
+using LibAtem.Common;
+using LibAtem.Util;
 
 namespace AtemEmulator.State
 {

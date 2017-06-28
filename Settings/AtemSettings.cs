@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml.Serialization;
+using LibAtem.Common;
 
 namespace AtemEmulator.State.Settings
 {
@@ -50,13 +51,7 @@ namespace AtemEmulator.State.Settings
 
         public UpstreamKeys UpstreamKeys { get; set; }
     }
-
-    public enum SDI3GOutputLevel
-    {
-        LevelA = 1,
-        LevelB = 0,
-    }
-
+    
     public enum DownConvertMode
     {
         CentreCut = 0,
@@ -126,20 +121,6 @@ namespace AtemEmulator.State.Settings
         Composite = 3,
         Component = 4,
         SVideo = 5,
-    }
-    public enum InternalPortType
-    {
-        External = 0,
-        Black = 1,
-        ColorBars = 2,
-        ColorGenerator = 3,
-        MediaPlayerFill = 4,
-        MediaPlayerKey = 5,
-        SuperSource = 6,
-
-        MEOutput = 128,
-        Auxilary = 129,
-        Mask = 130,
     }
 
     public enum AudioPortType

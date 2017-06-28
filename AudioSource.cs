@@ -1,6 +1,7 @@
 using System;
 using System.Xml.Serialization;
 using AtemEmulator.State.Settings;
+using LibAtem.Common;
 
 namespace AtemEmulator.State
 {
