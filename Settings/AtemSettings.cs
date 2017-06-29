@@ -113,29 +113,6 @@ namespace AtemEmulator.State.Settings
         public ExternalPortType PortType { get; set; }
     }
 
-    public enum ExternalPortType
-    {
-        Internal = 0,
-        SDI = 1,
-        HDMI = 2,
-        Composite = 3,
-        Component = 4,
-        SVideo = 5,
-    }
-
-    public enum AudioPortType
-    {
-        Internal = 0,
-        SDI = 1,
-        HDMI = 2,
-        Component = 3,
-        Composite = 4,
-        SVideo = 5,
-        XLR = 32,
-        AESEBU = 64,
-        RCA = 128,
-    }
-
     public static class ExternalPortTypeExtensions
     {
         public static AudioPortType GetAudioPortType(this ExternalPortType type)
