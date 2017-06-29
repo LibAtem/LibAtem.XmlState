@@ -5,22 +5,14 @@ namespace AtemEmulator.State.MixEffects.Key
 {
     public class MixEffectsKey
     {
-        public enum KeyType
-        {
-            Luma = 0,
-            Chroma = 1,
-            Pattern = 2,
-            DVE = 3
-        }
-
         public MixEffectsKey() : this(0)
         {
         }
 
-        public MixEffectsKey(int index)
+        public MixEffectsKey(uint index)
         {
             Index = index;
-            Mode = KeyType.Luma;
+            Mode = MixEffectKeyType.Luma;
 
             FillSource = VideoSource.Black;
             CutSource = VideoSource.Black;
@@ -34,10 +26,10 @@ namespace AtemEmulator.State.MixEffects.Key
         }
 
         [XmlAttribute("index")]
-        public int Index { get; set; }
+        public uint Index { get; set; }
 
         [XmlAttribute("type")]
-        public KeyType Mode { get; set; }
+        public MixEffectKeyType Mode { get; set; }
 
         [XmlAttribute("inputFill")]
         public VideoSource FillSource { get; set; }
