@@ -42,14 +42,6 @@ namespace AtemEmulator.State.Settings
         public List<MultiViewWindow> Windows { get; set; }
     }
 
-    public enum MultiViewLayout
-    {
-        ProgramTop = 0,
-        ProgramBottom = 1,
-        ProgramLeft = 2,
-        ProgramRight = 3,
-    }
-
     public class MultiViewWindow
     {
         public MultiViewWindow():this(0, VideoSource.Input1)
