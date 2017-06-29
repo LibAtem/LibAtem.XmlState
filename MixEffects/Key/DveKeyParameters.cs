@@ -1,4 +1,5 @@
 using System.Xml.Serialization;
+using LibAtem.Common;
 
 namespace AtemEmulator.State.MixEffects.Key
 {

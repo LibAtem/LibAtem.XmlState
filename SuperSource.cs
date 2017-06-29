@@ -3,13 +3,7 @@ using System.Xml.Serialization;
 using LibAtem.Common;
 
 namespace AtemEmulator.State
-{ 
-    public enum SuperSourceArtOption
-    {
-        Background = 0,
-        Foreground = 1
-    }
-
+{
     public class SuperSource
     {
         public const int ExpectedBoxCount = 4;
