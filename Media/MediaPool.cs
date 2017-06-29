@@ -40,13 +40,13 @@ namespace AtemEmulator.State.Media
         {    
         }
 
-        public MediaPoolStill(int index)
+        public MediaPoolStill(uint index)
         {
             Index = index;
         }
 
         [XmlAttribute("index")]
-        public int Index { get; set; }
+        public uint Index { get; set; }
 
         [XmlAttribute("name")]
         public string Name { get; set; }
@@ -61,7 +61,7 @@ namespace AtemEmulator.State.Media
         {
         }
 
-        public MediaPoolClip(int index)
+        public MediaPoolClip(uint index)
         {
             Index = index;
             Name = string.Empty;
@@ -70,7 +70,7 @@ namespace AtemEmulator.State.Media
         }
 
         [XmlAttribute("index")]
-        public int Index { get; set; }
+        public uint Index { get; set; }
 
         [XmlAttribute("name")]
         public string Name { get; set; }

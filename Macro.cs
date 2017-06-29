@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
-using AtemEmulator.State.MixEffects.TransitionStyle;
 using LibAtem.Common;
 
 namespace AtemEmulator.State
@@ -189,7 +188,7 @@ namespace AtemEmulator.State
         }
 
         [XmlAttribute("style")]
-        public TransitionStyle.TStyle TransitionStyle { get; set; }
+        public TStyle TransitionStyle { get; set; }
         public bool ShouldSerializeTransitionStyle()
         {
             switch (Id)

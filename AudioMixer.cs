@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Xml.Serialization;
+using LibAtem.Common;
 
 namespace AtemEmulator.State
 {
@@ -34,7 +34,7 @@ namespace AtemEmulator.State
         public AudioSource Id { get; set; }
 
         [XmlAttribute("mixOption")]
-        public MixOption MixOption { get; set; }
+        public AudioMixOption MixOption { get; set; }
 
         [XmlAttribute("gain")]
         public string GainXmlString
@@ -48,13 +48,6 @@ namespace AtemEmulator.State
 
         [XmlAttribute("balance")]
         public double Balance { get; set; }
-    }
-    
-    public enum MixOption
-    {
-        Off = 0,
-        On = 1,
-        AudioFollowVideo = 2
     }
 
     public class AudioMonitorOutput

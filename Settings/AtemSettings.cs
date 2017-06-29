@@ -51,13 +51,6 @@ namespace AtemEmulator.State.Settings
 
         public UpstreamKeys UpstreamKeys { get; set; }
     }
-    
-    public enum DownConvertMode
-    {
-        CentreCut = 0,
-        Letterbox = 1,
-        Anamorphic = 2,
-    }
 
     public class MultiViewVideoMode
     {

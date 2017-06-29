@@ -75,13 +75,13 @@ namespace AtemEmulator.State
         {
         }
 
-        public SuperSourceBox(int index)
+        public SuperSourceBox(uint index)
         {
             Index = index;
         }
 
         [XmlAttribute("index")]
-        public int Index { get; set; }
+        public uint Index { get; set; }
 
         [XmlAttribute("enabled")]
         public AtemBool Enabled { get; set; }

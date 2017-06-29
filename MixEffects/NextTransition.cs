@@ -1,46 +1,35 @@
 using System;
 using System.Xml.Serialization;
+using LibAtem.Common;
 
 namespace AtemEmulator.State.MixEffects
 {
     public class NextTransition
     {
-        [Flags]
-        public enum Transition
-        {
-            None = 0,
-            Background = 1 << 0,
-            Key1 = 1 << 1,
-            Key2 = 1 << 2,
-            Key3 = 1 << 3,
-            Key4 = 1 << 4,
-        }
-
         public NextTransition()
         {
-            Selection = Transition.Background;
-            NextSelection = Transition.Background;
+            Selection = TransitionLayer.Background;
+            NextSelection = TransitionLayer.Background;
         }
 
         [XmlIgnore]
-        public Transition Selection { get; set; }
+        public TransitionLayer Selection { get; set; }
 
         [XmlAttribute("selection")]
         public string SelectionString
         {
             get => Selection.ToString();
-            set => Selection = (Transition) Enum.Parse(typeof(Transition), value);
+            set => Selection = (TransitionLayer) Enum.Parse(typeof(TransitionLayer), value);
         }
 
         [XmlIgnore]
-        public Transition NextSelection { get; set; }
+        public TransitionLayer NextSelection { get; set; }
 
         [XmlAttribute("nextSelection")]
         public string NextSelectionString
         {
             get => NextSelection.ToString();
-            set => NextSelection = (Transition)Enum.Parse(typeof(Transition), value);
+            set => NextSelection = (TransitionLayer)Enum.Parse(typeof(TransitionLayer), value);
         }
     }
-
 }

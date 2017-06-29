@@ -1,18 +1,10 @@
 using System.Xml.Serialization;
+using LibAtem.Common;
 
 namespace AtemEmulator.State.MixEffects.TransitionStyle
 {
     public class TransitionStyle
     {
-        public enum TStyle
-        {
-            Mix = 0,
-            Dip = 1,
-            Wipe = 2,
-            DVE = 3,
-            Stinger = 4
-        }
-
         public TransitionStyle()
         {
             Style = TStyle.Mix;
