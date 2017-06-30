@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Xml.Serialization;
-using AtemEmulator.State.Settings;
-using AtemEmulator.Util;
 using LibAtem.Common;
 using LibAtem.Util;
 
@@ -76,6 +73,9 @@ namespace AtemEmulator.State
 
         public static bool IsAvailable(this VideoSource src, DeviceProfile profile)
         {
+            if (!src.IsValid())
+                return false;
+
             VideoSourceTypeAttribute props = src.GetAttribute<VideoSource, VideoSourceTypeAttribute>();
             switch (props.PortType)
             {
