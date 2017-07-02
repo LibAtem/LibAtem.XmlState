@@ -7,6 +7,12 @@ namespace AtemEmulator.State
 {
     public class AudioMixer
     {
+        public AudioMixer()
+        {
+            AudioInputs = new List<AudioInput>();
+            AudioMonitorOutputs = new List<AudioMonitorOutput>();
+        }
+
         [XmlAttribute("programOutGain")]
         public string ProgramOutGainXmlString
         {

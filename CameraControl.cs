@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
-using AtemEmulator.Util;
 using LibAtem.Common;
 using LibAtem.Util;
 
@@ -9,6 +8,12 @@ namespace AtemEmulator.State
 {
     public class CameraControl
     {
+        public CameraControl()
+        {
+            Parameters = new List<CameraControlParameter>();
+            Properties = new List<CameraControlProperty>();
+        }
+
         [XmlElement("Parameter")]
         public List<CameraControlParameter> Parameters { get; set; }
 

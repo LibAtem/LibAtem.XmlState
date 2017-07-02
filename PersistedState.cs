@@ -9,6 +9,29 @@ namespace AtemEmulator.State
     [XmlRoot("Profile", IsNullable = false)]
     public class PersistedState
     {
+        public PersistedState()
+        {
+            MixEffectBlocks = new List<MixEffectBlock>();
+            DownstreamKeys = new List<DownstreamKey>();
+            ColorGenerators = new List<ColorGenerator>();
+            Auxiliaries = new List<Auxiliary>();
+            Settings = new AtemSettings();
+            AudioMixer = new AudioMixer();
+            MediaPlayers = new List<MediaPlayer>();
+            SuperSource = new SuperSource();
+            MediaPool = new MediaPool();
+            CameraControl = new CameraControl();
+            MacroPool = new List<Macro>();
+            MacroControl = new MacroControl();
+        }
+
+        public PersistedState(DeviceProfile profile) : this()
+        {
+            Product = profile.Product;
+            MajorVersion = 1; //TODO
+            MinorVersion = 1; //TODO
+        }
+
         [XmlAttribute("majorVersion")]
         public int MajorVersion { get; set; }
 

@@ -6,6 +6,11 @@ namespace AtemEmulator.State
 {
     public class Macro
     {
+        public Macro()
+        {
+            Operations = new List<MacroOperation>();    
+        }
+
         [XmlAttribute("index")]
         public int Index { get; set; }
 

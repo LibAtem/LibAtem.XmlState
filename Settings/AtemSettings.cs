@@ -7,6 +7,18 @@ namespace AtemEmulator.State.Settings
 {
     public class AtemSettings
     {
+        public AtemSettings()
+        {
+            MultiViewVideoModes = new List<MultiViewVideoMode>();
+            AudioMonitors = new List<AudioMonitor>();
+            Talkback = new Talkback();
+            Inputs = new List<Input>();
+            MediaPool = new MediaPoolSettings();
+            MultiViews = new List<MultiView>();
+            ButtonMapping = new List<ButtonMap>();
+            UpstreamKeys = new UpstreamKeys();
+        }
+
         [XmlAttribute("videoMode")]
         public VideoMode VideoMode { get; set; }
 
