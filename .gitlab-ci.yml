@@ -1,0 +1,20 @@
+stages:
+  - build
+
+build:
+  image: microsoft/dotnet:latest
+  before_script:
+    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@git.julusian.co.uk/atem/LibAtem ../LibAtem
+    - git clone https://github.com/Julusian/FatAntelope.git ../FatAntelope
+    - dotnet restore LibAtem.XmlState.Test
+  script:
+    - dotnet publish -o "$(pwd)/build" -c Release LibAtem.XmlState
+    - cd LibAtem.XmlState.Test
+    - dotnet test
+  stage: build
+  tags:
+    - docker
+  artifacts:
+    paths:
+    - build/*
+  cache:
