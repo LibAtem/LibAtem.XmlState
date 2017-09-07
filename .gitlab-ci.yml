@@ -2,7 +2,7 @@ stages:
   - build
 
 build:
-  image: microsoft/dotnet:latest
+  image: microsoft/dotnet:2.0-sdk
   before_script:
     - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@git.julusian.co.uk/atem/LibAtem ../LibAtem
     - git clone https://github.com/Julusian/FatAntelope.git ../FatAntelope
