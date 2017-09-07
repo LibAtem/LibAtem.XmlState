@@ -1,0 +1,478 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Macros>
+  <Fields>
+    <!-- Ids -->
+    <Field id="auxiliaryIndex" name="AuxiliaryIndex" type="uint" />
+    <Field id="mixEffectBlockIndex" name="MixEffectBlockIndex" type="MixEffectBlockId" />
+    <Field id="hyperDeckIndex" name="HyperDeckIndex" type="int" />
+    <Field id="keyIndex" name="KeyIndex" type="uint" />
+
+    <!-- Common -->
+    <Field id="frames" name="Frames" type="uint" />
+    <Field id="enable" name="Enable" type="AtemBool" />
+    <Field id="input" name="Input" type="MacroInput" />
+
+    <!-- Transition -->
+    <Field id="style" name="TransitionStyle" type="TStyle" />
+    <Field id="rate" name="Rate" type="uint" />
+    <Field id="source" name="TransitionSource" type="TransitionLayer" enumAsString="true" />
+    
+    <!-- Keyer -->
+    <Field id="type" name="KeyType" type="MixEffectKeyType" />
+    <Field id="preMultiply" name="PreMultiply" type="AtemBool" />
+
+    <!-- Mask -->
+    <Field id="top" name="Top" type="double" />
+    <Field id="bottom" name="Bottom" type="double" />
+    <Field id="left" name="Left" type="double" />
+    <Field id="right" name="Right" type="double" />
+
+    <!-- Geometry -->
+    <Field id="xPosition" name="XPosition" type="double" />
+    <Field id="yPosition" name="YPosition" type="double" />
+    <Field id="rotation" name="Rotation" type="double" />
+    <Field id="size" name="Size" type="double" />
+    <Field id="xSize" name="XSize" type="double" />
+    <Field id="ySize" name="YSize" type="double" />
+
+    <!-- Media Player -->
+    <Field id="mediaPlayer" name="MediaPlayer" type="MediaPlayerId" />
+    <Field id="index" name="Index" type="uint" />
+    <Field id="loop" name="Loop" type="AtemBool" />
+
+    <!-- Supersource -->
+    <Field id="boxIndex" name="SuperSourceBoxIndex" type="uint" />
+    <Field id="artAbove" name="SuperSourceArtAbove" type="AtemBool" />
+
+    <!-- Audio -->
+    <Field id="gain" name="Gain" type="int" />
+
+    <!-- Hyperdeck -->
+    <Field id="clipIndex" name="HyperDeckClipIndex" type="int" />
+    <Field id="loopEnabled" name="HyperDeckLoopEnabled" type="AtemBool" />
+    <Field id="singleClipEnabled" name="HyperDeckSingleClipEnabled" type="AtemBool" />
+    <Field id="speedPercent" name="HyperDeckSpeedPercent" type="int" />
+    
+  </Fields>
+  <Operations>
+    <Op id="MacroSleep">
+      <Field id="frames" />
+    </Op>
+
+    <Op id="ProgramInput">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="input" />
+    </Op>
+    <Op id="PreviewInput">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="input" />
+    </Op>
+    <Op id="CutTransition">
+      <Field id="mixEffectBlockIndex" />
+    </Op>
+    <Op id="AutoTransition">
+      <Field id="mixEffectBlockIndex" />
+    </Op>
+    <Op id="FadeToBlackAuto">
+      <Field id="mixEffectBlockIndex" />
+    </Op>
+
+    <Op id="AuxiliaryInput">
+      <Field id="auxiliaryIndex" />
+      <Field id="input" />
+    </Op>
+
+    
+    <!-- Transition -->
+    <Op id="TransitionStyle">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="style" />
+    </Op>
+    <Op id="TransitionSource">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="source" />
+    </Op>
+    <Op id="TransitionMixRate">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="rate" />
+    </Op>
+    <Op id="TransitionStingerRate">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="rate" />
+    </Op>
+    <Op id="TransitionDVERate">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="rate" />
+    </Op>
+    <Op id="TransitionDipRate">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="rate" />
+    </Op>
+    <Op id="TransitionStingerMixRate">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="rate" />
+    </Op>
+    <Op id="TransitionWipeRate">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="rate" />
+    </Op>
+    
+
+    <!-- Media Player -->
+    <Op id="MediaPlayerSourceStillIndex">
+      <Field id="mediaPlayer" />
+      <Field id="index" />
+    </Op>
+    <Op id="MediaPlayerSourceClipIndex">
+      <Field id="mediaPlayer" />
+      <Field id="index" />
+    </Op>
+    <Op id="MediaPlayerSourceStill">
+      <Field id="mediaPlayer" />
+    </Op>
+    <Op id="MediaPlayerSourceClip">
+      <Field id="mediaPlayer" />
+    </Op>
+    <Op id="MediaPlayerPlay">
+      <Field id="mediaPlayer" />
+    </Op>
+    <Op id="MediaPlayerGoToBeginning">
+      <Field id="mediaPlayer" />
+    </Op>
+    <Op id="MediaPlayerLoop">
+      <Field id="mediaPlayer" />
+      <Field id="loop" />
+    </Op>
+
+    <!-- Super Source -->
+    <Op id="SuperSourceBoxEnable">
+      <Field id="boxIndex" />
+      <Field id="enable" />
+    </Op>
+    <Op id="SuperSourceArtFillInput">
+      <Field id="input" />
+    </Op>
+    <Op id="SuperSourceArtCutInput">
+      <Field id="input" />
+    </Op>
+    <Op id="SuperSourceBoxInput">
+      <Field id="boxIndex" />
+      <Field id="input" />
+    </Op>
+    <Op id="SuperSourceBoxXPosition">
+      <Field id="boxIndex" />
+      <Field id="xPosition" />
+    </Op>
+    <Op id="SuperSourceBoxYPosition">
+      <Field id="boxIndex" />
+      <Field id="yPosition" />
+    </Op>
+    <Op id="SuperSourceBoxSize">
+      <Field id="boxIndex" />
+      <Field id="size" />
+    </Op>
+    <Op id="SuperSourceArtAbove">
+      <Field id="artAbove" />
+    </Op>
+    <Op id="SuperSourceBorderEnable">
+      <Field id="boxIndex" />
+      <Field id="enable" />
+    </Op>
+
+    <Op id="SuperSourceBoxMaskEnable">
+      <Field id="boxIndex" />
+      <Field id="enable" />
+    </Op>
+    <Op id="SuperSourceBoxMaskTop">
+      <Field id="boxIndex" />
+      <Field id="top" />
+    </Op>
+    <Op id="SuperSourceBoxMaskBottom">
+      <Field id="boxIndex" />
+      <Field id="bottom" />
+    </Op>
+    <Op id="SuperSourceBoxMaskLeft">
+      <Field id="boxIndex" />
+      <Field id="left" />
+    </Op>
+    <Op id="SuperSourceBoxMaskRight">
+      <Field id="boxIndex" />
+      <Field id="right" />
+    </Op>
+
+
+    <!-- DVE and Fly Key -->
+    <Op id="DVEAndFlyKeyXPosition">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="xPosition" />
+    </Op>
+    <Op id="DVEAndFlyKeyYPosition">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="yPosition" />
+    </Op>
+    <Op id="DVEAndFlyKeyXSize">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="xSize" />
+    </Op>
+    <Op id="DVEAndFlyKeyYSize">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="ySize" />
+    </Op>
+    <Op id="DVEAndFlyKeyRotation">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="rotation" />
+    </Op>
+    
+    <Op id="DVEKeyShadowEnable">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="enable" />
+    </Op>
+    <Op id="DVEKeyShadowAltitude">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+    </Op>
+    <Op id="DVEKeyShadowDirection">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+    </Op>
+    
+    <Op id="DVEKeyBorderEnable">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="enable" />
+    </Op>
+    <Op id="DVEKeyBorderBevel">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+    </Op>
+    <Op id="DVEKeyBorderBevelPosition">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+    </Op>
+    <Op id="DVEKeyBorderBevelSoftness">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+    </Op>
+    <Op id="DVEKeyBorderHue">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+    </Op>
+    <Op id="DVEKeyBorderInnerSoftness">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+    </Op>
+    <Op id="DVEKeyBorderInnerWidth">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+    </Op>
+    <Op id="DVEKeyBorderLuminescence">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+    </Op>
+    <Op id="DVEKeyBorderOpacity">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+    </Op>
+    <Op id="DVEKeyBorderOuterSoftness">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+    </Op>
+    <Op id="DVEKeyBorderOuterWidth">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+    </Op>
+    <Op id="DVEKeyBorderSaturation">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+    </Op>
+    
+    <Op id="DVEKeyMaskEnable">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="enable" />
+    </Op>
+    <Op id="DVEKeyMaskTop">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="top" />
+    </Op>
+    <Op id="DVEKeyMaskBottom">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="bottom" />
+    </Op>
+    <Op id="DVEKeyMaskLeft">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="left" />
+    </Op>
+    <Op id="DVEKeyMaskRight">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="right" />
+    </Op>
+    
+
+    <!-- Downstream Key -->
+    <Op id="DownstreamKeyOnAir">
+      <Field id="keyIndex" />
+      <Field id="onAir" />
+    </Op>
+    <Op id="DownstreamKeyPreMultiply">
+      <Field id="keyIndex" />
+      <Field id="preMultiply" />
+    </Op>
+    
+    <Op id="DownstreamKeyMaskEnable">
+      <Field id="keyIndex" />
+      <Field id="enable" />
+    </Op>
+    <Op id="DownstreamKeyMaskTop">
+      <Field id="keyIndex" />
+      <Field id="top" />
+    </Op>
+    <Op id="DownstreamKeyMaskBottom">
+      <Field id="keyIndex" />
+      <Field id="bottom" />
+    </Op>
+    <Op id="DownstreamKeyMaskLeft">
+      <Field id="keyIndex" />
+      <Field id="left" />
+    </Op>
+    <Op id="DownstreamKeyMaskRight">
+      <Field id="keyIndex" />
+      <Field id="right" />
+    </Op>
+    
+    <!-- Upstream Key -->
+    <Op id="KeyType">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="type" />
+    </Op>
+    <Op id="KeyOnAir">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="onAir" />
+    </Op>
+    <Op id="KeyFillInput">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="input" />
+    </Op>
+    <Op id="KeyCutInput">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="input" />
+    </Op>
+    
+    <Op id="KeyMaskEnable">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="enable" />
+    </Op>
+    <Op id="KeyMaskTop">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="top" />
+    </Op>
+    <Op id="KeyMaskBottom">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="bottom" />
+    </Op>
+    <Op id="KeyMaskLeft">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="left" />
+    </Op>
+    <Op id="KeyMaskRight">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="right" />
+    </Op>
+
+
+    <!-- Luma Key -->
+    <Op id="LumaKeyClip">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+    </Op>
+    <Op id="LumaKeyGain">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+    </Op>
+    <Op id="LumaKeyInvert">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+    </Op>
+    <Op id="LumaKeyPreMultiply">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="preMultiply" />
+    </Op>
+
+
+    <!-- Fly Key -->
+    <Op id="FlyKeyFrameRotation">
+      <Field id="rotation" />
+    </Op>
+
+    <Op id="KeyFlyEnable">
+      <Field id="mixEffectBlockIndex" />
+      <Field id="keyIndex" />
+      <Field id="enable" />
+    </Op>
+    <Op id="FlyKeyFrameMaskTop">
+      <Field id="top" />
+    </Op>
+    <Op id="FlyKeyFrameMaskBottom">
+      <Field id="bottom" />
+    </Op>
+    <Op id="FlyKeyFrameMaskLeft">
+      <Field id="left" />
+    </Op>
+    <Op id="FlyKeyFrameMaskRight">
+      <Field id="right" />
+    </Op>
+
+
+    <!-- Audio -->
+    <Op id="AudioMixerInputGain">
+      <Field id="input" />
+      <Field id="gain" />
+    </Op>
+    
+    
+    <!-- Hyperdeck -->
+    <Op id="HyperDeckSetSourceClipIndex">
+      <Field id="hyperDeckIndex" />
+      <Field id="clipIndex" />
+    </Op>
+    <Op id="HyperDeckSetLoop">
+      <Field id="hyperDeckIndex" />
+      <Field id="loopEnabled" />
+    </Op>
+    <Op id="HyperDeckSetSingleClip">
+      <Field id="hyperDeckIndex" />
+      <Field id="singleClipEnabled" />
+    </Op>
+    <Op id="HyperDeckSetSpeed">
+      <Field id="hyperDeckIndex" />
+      <Field id="speedPercent" />
+    </Op>
+    <Op id="HyperDeckPlay">
+      <Field id="hyperDeckIndex" />
+    </Op>
+    <Op id="HyperDeckStop">
+      <Field id="hyperDeckIndex" />
+    </Op>
+    
+  </Operations>
+</Macros>
