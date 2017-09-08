@@ -223,7 +223,7 @@ namespace LibAtem.XmlState.MacroSpec
             
             var opExtClass = ClassDeclaration("MacroOpExtensions")
                 .AddModifiers(Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.StaticKeyword));
-            opExtClass = opExtClass.AddMembers(operations.Select(o => GenerateMacroOpToXml(o, fields)).ToArray());
+            opExtClass = opExtClass.AddMembers(GenerateMacroOpToXml(operations, fields));
 
             var operationsExtClass = ClassDeclaration("MacroOperationsExtensions")
                 .AddModifiers(Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.StaticKeyword));
@@ -242,8 +242,36 @@ namespace LibAtem.XmlState.MacroSpec
                 .ToFullString();
         }
 
-        private static MemberDeclarationSyntax GenerateMacroOpToXml(Operation op, IReadOnlyList<Field> fields)
+        private static MemberDeclarationSyntax GenerateMacroOpToXml(IReadOnlyList<Operation> operations, IReadOnlyList<Field> fields)
         {
+            var switchStmt = SwitchStatement(MemberAccessExpression(
+                SyntaxKind.SimpleMemberAccessExpression,
+                IdentifierName("op"),
+                IdentifierName("GetType().FullName")));
+
+            foreach (Operation op in operations)
+            {
+                var label = CaseSwitchLabel(InvocationExpression(IdentifierName("nameof"))
+                    .WithArgumentList(ArgumentList(SingletonSeparatedList(Argument((ParseTypeName(op.Classname)))))));
+                var opCase = SwitchSection(List(new SwitchLabelSyntax[] { label }), List(GenerateMacroOpToXml(op, fields).ToArray()));
+                switchStmt = switchStmt.AddSections(opCase);
+            }
+
+            // TODO throw an exception instead of returning null.
+            var defaultCase = SwitchSection(List(new SwitchLabelSyntax[] { DefaultSwitchLabel() }), List(new StatementSyntax[] { ReturnStatement(ParseExpression("null")) }));
+            switchStmt = switchStmt.AddSections(defaultCase);
+
+            return MethodDeclaration(ParseTypeName("MacroOperation"), "ToMacroOperation")
+                .AddModifiers(Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.StaticKeyword))
+                .AddParameterListParameters(Parameter(Identifier("op")).AddModifiers(Token(SyntaxKind.ThisKeyword)).WithType(IdentifierName("MacroOpBase")))
+                .AddBodyStatements(switchStmt);
+        }
+
+        private static IEnumerable<StatementSyntax> GenerateMacroOpToXml(Operation op, IReadOnlyList<Field> fields)
+        {
+            string[] nameParts = op.Classname.Split(".");
+            string id = nameParts[nameParts.Count() - 1];
+
             var props = SeparatedList<ExpressionSyntax>();
 
             foreach (OperationField f in op.Fields)
@@ -254,21 +282,20 @@ namespace LibAtem.XmlState.MacroSpec
                     SyntaxKind.SimpleAssignmentExpression,
                     IdentifierName(field.Name),
                     ConvertVariable(MemberAccessExpression(
-                        SyntaxKind.SimpleMemberAccessExpression,
-                        IdentifierName("op"),
-                        IdentifierName(f.PropName)),
+                            SyntaxKind.SimpleMemberAccessExpression,
+                            IdentifierName("op" + id),
+                            IdentifierName(f.PropName)),
                         f.Type, MapType(f.Type)));
-
+                
                 props = props.Add(expr);
             }
 
-            var inst = ObjectCreationExpression(IdentifierName("MacroOperation"))
-                .WithNewKeyword(Token(SyntaxKind.NewKeyword)).WithInitializer(InitializerExpression(SyntaxKind.ObjectInitializerExpression, props));
+            yield return LocalDeclarationStatement(VariableDeclaration(IdentifierName("var"))
+                .WithVariables(SingletonSeparatedList(VariableDeclarator(Identifier("op" + id))
+                    .WithInitializer(EqualsValueClause(CastExpression(IdentifierName(op.Classname), IdentifierName("op")))))));
 
-            return MethodDeclaration(ParseTypeName("MacroOperation"), "ToMacroOperation")
-                .AddModifiers(Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.StaticKeyword))
-                .AddParameterListParameters(Parameter(Identifier("op")).AddModifiers(Token(SyntaxKind.ThisKeyword)).WithType(IdentifierName(op.Classname)))
-                .AddBodyStatements(ReturnStatement(inst));
+            yield return ReturnStatement(ObjectCreationExpression(IdentifierName("MacroOperation"))
+                .WithNewKeyword(Token(SyntaxKind.NewKeyword)).WithInitializer(InitializerExpression(SyntaxKind.ObjectInitializerExpression, props)));
         }
 
         private static MemberDeclarationSyntax GenerateXmlToMacroOp(IReadOnlyList<Operation> operations, IReadOnlyList<Field> fields)
