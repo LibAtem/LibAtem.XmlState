@@ -52,12 +52,25 @@
     <Field id="loopEnabled" name="HyperDeckLoopEnabled" type="AtemBool" />
     <Field id="singleClipEnabled" name="HyperDeckSingleClipEnabled" type="AtemBool" />
     <Field id="speedPercent" name="HyperDeckSpeedPercent" type="int" />
+
+    <!-- Auto serialize prototype
+    <Field id="speedPercent" name="HyperDeckSpeedPercent" type="int" byteIndex="1" byteType="Int32" />
+    -->
     
   </Fields>
   <Operations>
     <Op id="MacroSleep">
       <Field id="frames" />
     </Op>
+
+    <!-- To Command Prototype.
+        Would need to be a seperate AtemEmulator generator package but can leech of the xml file defined here.
+        This doesn't add too much complexity to the file, or too much of a mess
+    <Op id="ProgramInput" command="MixEffects.ProgramInputSetCommand">
+      <Field id="mixEffectBlockIndex" property="Index" byteIndex="2" />
+      <Field id="input" property="Source" />
+    </Op>
+    -->
 
     <Op id="ProgramInput">
       <Field id="mixEffectBlockIndex" />

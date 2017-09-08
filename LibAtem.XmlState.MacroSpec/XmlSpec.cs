@@ -1,59 +1,83 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Xml.Serialization;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LibAtem.XmlState.MacroSpec
 {
-    [XmlRoot("Macros", IsNullable = false)]
-    public class XmlSpec
+    public class Field : IEquatable<Field>
     {
-        [XmlArrayItem("Field")]
-        public List<XmlField> Fields { get; set; }
-
-        [XmlArrayItem("Op")]
-        public List<XmlOperation> Operations { get; set; }
-
-
-        public static XmlSpec Load(string path)
+        public Field(string id, string name, string type, bool enumAsString)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(XmlSpec));
-            FileStream fs = new FileStream(path, FileMode.Open);
-            var res = (XmlSpec)serializer.Deserialize(fs);
-            fs.Dispose();
-            return res;
+            Id = id;
+            Name = name;
+            Type = type;
+            EnumAsString = enumAsString;
+        }
+
+        public string Id { get; }
+        public string Name { get; }
+        public string Type { get; }
+        public bool EnumAsString { get; }
+
+        public bool Equals(Field other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return string.Equals(Id, other.Id) && string.Equals(Name, other.Name) && string.Equals(Type, other.Type) && EnumAsString == other.EnumAsString;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Field) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hashCode = (Id != null ? Id.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Name != null ? Name.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Type != null ? Type.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ EnumAsString.GetHashCode();
+                return hashCode;
+            }
+        }
+        
+        public override string ToString()
+        {
+            return string.Format("{0}: {1} - {2} ({3})", Id, Name, Type);
         }
     }
-
-    public class XmlField
+    
+    public class Operation
     {
-        [XmlAttribute("id")]
-        public string Id { get; set; }
+        public Operation(string id, string classname, IEnumerable<OperationField> fields)
+        {
+            Id = id;
+            Classname = classname;
+            Fields = fields.ToList();
+        }
 
-        [XmlAttribute("name")]
-        public string Name { get; set; }
-
-        [XmlAttribute("type")]
-        public string Type { get; set; }
-
-        [XmlAttribute("namespace")]
-        public string Namespace { get; set; }
-
-        [XmlAttribute("enumAsString")]
-        public bool EnumAsString { get; set; }
+        public string Id { get; }
+        public string Classname { get; }
+        public IReadOnlyList<OperationField> Fields { get; }
     }
 
-    public class XmlOperation
+    public class OperationField
     {
-        [XmlAttribute("id")]
-        public string Id { get; set; }
+        public string Id { get; }
+        public string PropName { get; }
+        public string Type { get; }
 
-        [XmlElement("Field")]
-        public List<XmlOpeationField> Fields { get; set; }
-    }
-
-    public class XmlOpeationField
-    {
-        [XmlAttribute("id")]
-        public string Id { get; set; }
+        public OperationField(string id, string propName, string type)
+        {
+            Id = id;
+            PropName = propName;
+            Type = type;
+        }
+        
     }
 }
