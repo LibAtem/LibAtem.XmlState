@@ -6,33 +6,15 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using LibAtem.MacroOperations;
-using LibAtem.Common;
-using LibAtem.Serialization;
-
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
+using LibAtem.Common;
+using LibAtem.MacroOperations;
+using LibAtem.Serialization;
 
 namespace LibAtem.XmlState.MacroSpec
 {
     public class Program
     {
-        private static string MapType(string type)
-        {
-            switch (type)
-            {
-                case "LibAtem.Common.VideoSource":
-                    return "LibAtem.XmlState.MacroInput";
-                case "LibAtem.Common.AudioSource":
-                    return "LibAtem.XmlState.MacroInput";
-                case "System.Boolean":
-                    return "LibAtem.XmlState.AtemBool";
-                case "LibAtem.Common.DownstreamKeyId":
-                    return "System.UInt32";
-                default:
-                    return type;
-            }
-        }
-
         private static ExpressionSyntax ConvertVariable(ExpressionSyntax expr, string fromType, string toType)
         {
             if (toType == fromType)
@@ -81,7 +63,7 @@ namespace LibAtem.XmlState.MacroSpec
                     if (fieldAttr == null)
                         continue;
 
-                    fields.Add(new Field(fieldAttr.Id, fieldAttr.Name, MapType(prop.PropertyType.ToString()), prop.PropertyType.GetCustomAttributes<FlagsAttribute>().Any()));
+                    fields.Add(new Field(fieldAttr.Id, fieldAttr.Name, TypeMappings.MapType(prop.PropertyType.ToString()), prop.PropertyType.GetCustomAttributes<FlagsAttribute>().Any()));
 
                     opFields.Add(new OperationField(fieldAttr.Id, prop.Name, prop.PropertyType.ToString()));
                 }
@@ -285,7 +267,7 @@ namespace LibAtem.XmlState.MacroSpec
                             SyntaxKind.SimpleMemberAccessExpression,
                             IdentifierName("op" + id),
                             IdentifierName(f.PropName)),
-                        f.Type, MapType(f.Type)));
+                        f.Type, TypeMappings.MapType(f.Type)));
                 
                 props = props.Add(expr);
             }
@@ -337,7 +319,7 @@ namespace LibAtem.XmlState.MacroSpec
                         SyntaxKind.SimpleMemberAccessExpression,
                         IdentifierName("mac"),
                         IdentifierName(field.Name)),
-                        MapType(f.Type), f.Type));
+                        TypeMappings.MapType(f.Type), f.Type));
 
                 props = props.Add(expr);
             }
