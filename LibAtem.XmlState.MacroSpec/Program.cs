@@ -233,8 +233,7 @@ namespace LibAtem.XmlState.MacroSpec
 
             foreach (Operation op in operations)
             {
-                var label = CaseSwitchLabel(InvocationExpression(IdentifierName("nameof"))
-                    .WithArgumentList(ArgumentList(SingletonSeparatedList(Argument((ParseTypeName(op.Classname)))))));
+                var label = CaseSwitchLabel(ParseExpression("\"" + op.Classname + "\""));
                 var opCase = SwitchSection(List(new SwitchLabelSyntax[] { label }), List(GenerateMacroOpToXml(op, fields).ToArray()));
                 switchStmt = switchStmt.AddSections(opCase);
             }
@@ -254,7 +253,11 @@ namespace LibAtem.XmlState.MacroSpec
             string[] nameParts = op.Classname.Split(".");
             string id = nameParts[nameParts.Count() - 1];
 
-            var props = SeparatedList<ExpressionSyntax>();
+            var props = SeparatedList<ExpressionSyntax>()
+                .Add(AssignmentExpression(
+                    SyntaxKind.SimpleAssignmentExpression,
+                    IdentifierName("Id"),
+                    IdentifierName("MacroOperationType." + op.Id)));
 
             foreach (OperationField f in op.Fields)
             {
