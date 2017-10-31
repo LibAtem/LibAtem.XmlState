@@ -35,10 +35,10 @@ namespace LibAtem.XmlState.MacroSpec
             if (fromType == "LibAtem.XmlState.AtemBool" && toType == "System.Boolean")
                 return MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, expr, IdentifierName("Value()"));
 
-            if (fromType == "System.UInt32" && toType == "LibAtem.Common.DownstreamKeyId")
-                return CastExpression(ParseTypeName("LibAtem.Common.DownstreamKeyId"), expr);
-            if (fromType == "LibAtem.Common.DownstreamKeyId" && toType == "System.UInt32")
-                return CastExpression(ParseTypeName("System.UInt32"), expr);
+//            if (fromType == "System.UInt32" && toType == "LibAtem.Common.DownstreamKeyId")
+//                return CastExpression(ParseTypeName("LibAtem.Common.DownstreamKeyId"), expr);
+//            if (fromType == "LibAtem.Common.DownstreamKeyId" && toType == "System.UInt32")
+//                return CastExpression(ParseTypeName("System.UInt32"), expr);
 
             return expr;
         }
@@ -63,8 +63,9 @@ namespace LibAtem.XmlState.MacroSpec
                     if (fieldAttr == null)
                         continue;
 
+
                     Tuple<string, bool> mappedType = TypeMappings.MapTypeFull(prop.PropertyType);
-                    fields.Add(new Field(fieldAttr.Id, fieldAttr.Name, mappedType.Item1, mappedType.Item2, prop.PropertyType.GetCustomAttributes<FlagsAttribute>().Any()));
+                    fields.Add(new Field(fieldAttr.Id, fieldAttr.Name, mappedType.Item1, mappedType.Item2, prop.PropertyType.GetCustomAttributes<FlagsAttribute>().Any() || prop.PropertyType.GetCustomAttributes<XmlAsStringAttribute>().Any()));
 
                     opFields.Add(new OperationField(fieldAttr.Id, fieldAttr.Name, prop.Name, prop.PropertyType.ToString()));
                 }
@@ -75,7 +76,8 @@ namespace LibAtem.XmlState.MacroSpec
             fields = fields.Distinct().OrderBy(f => f.Id).ToList();
 
             List<IGrouping<string, Field>> groups = fields.GroupBy(f => f.Id).ToList();
-            if (groups.Any(g => g.Count() > 1 && !g.First().IsEnum))
+            var badGroups = groups.Where(g => g.Count() > 1 && !g.All(f => f.IsEnum)).ToList();
+            if (badGroups.Any())
                 throw new Exception("Found mismatch in field specs");
 
             var res = new List<Field>();
@@ -127,15 +129,19 @@ namespace LibAtem.XmlState.MacroSpec
 
             if (field.IsEnum && field.Entries.Count > 1)
             {
-                string stringPropName = field.Id.First().ToString().ToUpper() + field.Id.Substring(1) + "String";
+                string stringPropName = field.Id.First().ToString().ToUpper() + field.Id.Substring(1) + (field.EnumAsString ? "String" : "Int");
 
-                yield return CreateAutoProperty(stringPropName, "string", CreateAttribute(field.Id));
+                yield return CreateAutoProperty(stringPropName, field.EnumAsString ? "string" : "int", CreateAttribute(field.Id));
                 yield return CreateCanSerializeAt(stringPropName, opNames);
 
                 foreach (FieldEntry ent in field.Entries)
                 {
-                    string getStr = string.Format("({1})Enum.Parse(typeof({1}), {0});", stringPropName, ent.Type);
-                    string setStr = string.Format("{0} = value.ToString();", stringPropName);
+                    string getStr = field.EnumAsString
+                        ? string.Format("({1})Enum.Parse(typeof({1}), {0});", stringPropName, ent.Type)
+                        : string.Format("({1}){0};", stringPropName, ent.Type);
+                    string setStr = field.EnumAsString
+                        ? string.Format("{0} = value.ToString();", stringPropName)
+                        : string.Format("{0} = (int)value;", stringPropName);
 
                     yield return CreateProperty(ent.Name, ent.Type, CreateIgnoreAttribute())
                         .AddAccessorListAccessors(CreateArrowExpression(SyntaxKind.GetAccessorDeclaration, getStr))

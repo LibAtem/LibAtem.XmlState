@@ -14,8 +14,6 @@ namespace LibAtem.XmlState.MacroSpec
                     return "LibAtem.XmlState.MacroInput";
                 case "System.Boolean":
                     return "LibAtem.XmlState.AtemBool";
-                case "LibAtem.Common.DownstreamKeyId":
-                    return "System.UInt32";
                 default:
                     return type;
             }
@@ -31,8 +29,6 @@ namespace LibAtem.XmlState.MacroSpec
                     return Tuple.Create("LibAtem.XmlState.MacroInput", true);
                 case "System.Boolean":
                     return Tuple.Create("LibAtem.XmlState.AtemBool", true);
-                case "LibAtem.Common.DownstreamKeyId":
-                    return Tuple.Create("System.UInt32", false);
                 default:
                     return Tuple.Create(type.FullName, type.IsEnum);
             }
