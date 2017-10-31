@@ -280,8 +280,8 @@ namespace LibAtem.XmlState.MacroSpec
                 switchStmt = switchStmt.AddSections(opCase);
             }
 
-            // TODO throw an exception instead of returning null.
-            var defaultCase = SwitchSection(List(new SwitchLabelSyntax[] { DefaultSwitchLabel() }), List(new StatementSyntax[] { ReturnStatement(ParseExpression("null")) }));
+            var throwStmt = ThrowStatement(ParseExpression("new Exception(string.Format(\"Unknown type: {0}\", op.Id))"));
+            var defaultCase = SwitchSection(List(new SwitchLabelSyntax[] {DefaultSwitchLabel()}), List(new StatementSyntax[] {throwStmt}));
             switchStmt = switchStmt.AddSections(defaultCase);
 
             return MethodDeclaration(ParseTypeName("MacroOperation"), "ToMacroOperation")
@@ -337,8 +337,8 @@ namespace LibAtem.XmlState.MacroSpec
                 switchStmt = switchStmt.AddSections(opCase);
             }
 
-            // TODO throw an exception instead of returning null.
-            var defaultCase = SwitchSection(List(new SwitchLabelSyntax[] { DefaultSwitchLabel() }), List(new StatementSyntax[] { ReturnStatement(ParseExpression("null")) })); 
+            var throwStmt = ThrowStatement(ParseExpression("new Exception(string.Format(\"Unknown type: {0}\", mac.Id))"));
+            var defaultCase = SwitchSection(List(new SwitchLabelSyntax[] {DefaultSwitchLabel()}), List(new StatementSyntax[] {throwStmt}));
             switchStmt = switchStmt.AddSections(defaultCase);
             
             return MethodDeclaration(ParseTypeName("IMacroOperation"), "ToMacroOp")
