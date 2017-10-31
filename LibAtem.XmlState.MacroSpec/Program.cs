@@ -63,9 +63,10 @@ namespace LibAtem.XmlState.MacroSpec
                     if (fieldAttr == null)
                         continue;
 
-                    fields.Add(new Field(fieldAttr.Id, fieldAttr.Name, TypeMappings.MapType(prop.PropertyType.ToString()), prop.PropertyType.GetCustomAttributes<FlagsAttribute>().Any()));
+                    Tuple<string, bool> mappedType = TypeMappings.MapTypeFull(prop.PropertyType);
+                    fields.Add(new Field(fieldAttr.Id, fieldAttr.Name, mappedType.Item1, mappedType.Item2, prop.PropertyType.GetCustomAttributes<FlagsAttribute>().Any()));
 
-                    opFields.Add(new OperationField(fieldAttr.Id, prop.Name, prop.PropertyType.ToString()));
+                    opFields.Add(new OperationField(fieldAttr.Id, fieldAttr.Name, prop.Name, prop.PropertyType.ToString()));
                 }
 
                 operations.Add(new Operation(id.ToString(), type.FullName, opFields));
@@ -73,11 +74,25 @@ namespace LibAtem.XmlState.MacroSpec
 
             fields = fields.Distinct().OrderBy(f => f.Id).ToList();
 
-            var groups = fields.GroupBy(f => f.Id);
-            if (groups.Any(g => g.Count() > 1))
+            List<IGrouping<string, Field>> groups = fields.GroupBy(f => f.Id).ToList();
+            if (groups.Any(g => g.Count() > 1 && !g.First().IsEnum))
                 throw new Exception("Found mismatch in field specs");
 
-            return Tuple.Create(operations, fields);
+            var res = new List<Field>();
+            foreach (IGrouping<string, Field> grp in groups)
+            {
+                var f = grp.First();
+                if (!f.IsEnum)
+                {
+                    res.Add(grp.First());
+                    continue;
+                }
+
+                var newTypes = grp.SelectMany(g => g.Entries).ToArray();
+                res.Add(new Field(f.Id, newTypes, f.EnumAsString));
+            }
+
+            return Tuple.Create(operations, res);
         }
 
         public static void Main(string[] args)
@@ -108,27 +123,48 @@ namespace LibAtem.XmlState.MacroSpec
         {
             List<string> opNames = operations.Where(o => o.Fields.Any(f => f.Id == field.Id)).Select(o => o.Id).ToList();
             if (opNames.Count == 0)
-                throw new Exception("Found Field with no usages: " + field.Name);
+                throw new Exception("Found Field with no usages: " + field.Entries);
 
-            if (field.EnumAsString)
+            if (field.IsEnum && field.Entries.Count > 1)
             {
-                yield return CreateAutoProperty(field.Name, field.Type, CreateIgnoreAttribute());
+                string stringPropName = field.Id.First().ToString().ToUpper() + field.Id.Substring(1) + "String";
 
-                string getStr = string.Format("{0}.ToString();", field.Name);
-                string setStr = string.Format("{0} = ({1})Enum.Parse(typeof({1}), value);", field.Name, field.Type);
+                yield return CreateAutoProperty(stringPropName, "string", CreateAttribute(field.Id));
+                yield return CreateCanSerializeAt(stringPropName, opNames);
 
-                yield return CreateProperty(field.Name + "String", "string", CreateAttribute(field.Id))
-                    .AddAccessorListAccessors(CreateArrowExpression(SyntaxKind.GetAccessorDeclaration, getStr))
-                    .AddAccessorListAccessors(CreateArrowExpression(SyntaxKind.SetAccessorDeclaration, setStr));
+                foreach (FieldEntry ent in field.Entries)
+                {
+                    string getStr = string.Format("({1})Enum.Parse(typeof({1}), {0});", stringPropName, ent.Type);
+                    string setStr = string.Format("{0} = value.ToString();", stringPropName);
 
-                yield return CreateCanSerializeAt(field.Name + "String", opNames);
+                    yield return CreateProperty(ent.Name, ent.Type, CreateIgnoreAttribute())
+                        .AddAccessorListAccessors(CreateArrowExpression(SyntaxKind.GetAccessorDeclaration, getStr))
+                        .AddAccessorListAccessors(CreateArrowExpression(SyntaxKind.SetAccessorDeclaration, setStr));
+                }
 
                 yield break;
             }
 
-            yield return CreateAutoProperty(field.Name, field.Type, CreateAttribute(field.Id));
+            FieldEntry entry = field.Entries.First();
+            if (field.EnumAsString)
+            {
+                yield return CreateAutoProperty(entry.Name, entry.Type, CreateIgnoreAttribute());
 
-            yield return CreateCanSerializeAt(field.Name, opNames);
+                string getStr = string.Format("{0}.ToString();", entry.Name);
+                string setStr = string.Format("{0} = ({1})Enum.Parse(typeof({1}), value);", entry.Name, entry.Type);
+
+                yield return CreateProperty(entry.Name + "String", "string", CreateAttribute(field.Id))
+                    .AddAccessorListAccessors(CreateArrowExpression(SyntaxKind.GetAccessorDeclaration, getStr))
+                    .AddAccessorListAccessors(CreateArrowExpression(SyntaxKind.SetAccessorDeclaration, setStr));
+
+                yield return CreateCanSerializeAt(entry.Name + "String", opNames);
+
+                yield break;
+            }
+
+            yield return CreateAutoProperty(entry.Name, entry.Type, CreateAttribute(field.Id));
+
+            yield return CreateCanSerializeAt(entry.Name, opNames);
         }
 
         private static AccessorDeclarationSyntax CreateArrowExpression(SyntaxKind kind, string expression)
@@ -205,11 +241,11 @@ namespace LibAtem.XmlState.MacroSpec
             
             var opExtClass = ClassDeclaration("MacroOpExtensions")
                 .AddModifiers(Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.StaticKeyword));
-            opExtClass = opExtClass.AddMembers(GenerateMacroOpToXml(operations, fields));
+            opExtClass = opExtClass.AddMembers(GenerateMacroOpToXml(operations));
 
             var operationsExtClass = ClassDeclaration("MacroOperationsExtensions")
                 .AddModifiers(Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.StaticKeyword));
-            operationsExtClass = operationsExtClass.AddMembers(GenerateXmlToMacroOp(operations, fields));
+            operationsExtClass = operationsExtClass.AddMembers(GenerateXmlToMacroOp(operations));
 
             // Create namespace
             var newNamespace = NamespaceDeclaration(ParseName("LibAtem.XmlState"))
@@ -224,7 +260,7 @@ namespace LibAtem.XmlState.MacroSpec
                 .ToFullString();
         }
 
-        private static MemberDeclarationSyntax GenerateMacroOpToXml(IReadOnlyList<Operation> operations, IReadOnlyList<Field> fields)
+        private static MemberDeclarationSyntax GenerateMacroOpToXml(IReadOnlyList<Operation> operations)
         {
             var switchStmt = SwitchStatement(MemberAccessExpression(
                 SyntaxKind.SimpleMemberAccessExpression,
@@ -234,7 +270,7 @@ namespace LibAtem.XmlState.MacroSpec
             foreach (Operation op in operations)
             {
                 var label = CaseSwitchLabel(ParseExpression("\"" + op.Classname + "\""));
-                var opCase = SwitchSection(List(new SwitchLabelSyntax[] { label }), List(GenerateMacroOpToXml(op, fields).ToArray()));
+                var opCase = SwitchSection(List(new SwitchLabelSyntax[] { label }), List(GenerateMacroOpToXml(op).ToArray()));
                 switchStmt = switchStmt.AddSections(opCase);
             }
 
@@ -248,7 +284,7 @@ namespace LibAtem.XmlState.MacroSpec
                 .AddBodyStatements(switchStmt);
         }
 
-        private static IEnumerable<StatementSyntax> GenerateMacroOpToXml(Operation op, IReadOnlyList<Field> fields)
+        private static IEnumerable<StatementSyntax> GenerateMacroOpToXml(Operation op)
         {
             string[] nameParts = op.Classname.Split(".");
             string id = nameParts[nameParts.Count() - 1];
@@ -261,11 +297,9 @@ namespace LibAtem.XmlState.MacroSpec
 
             foreach (OperationField f in op.Fields)
             {
-                Field field = fields.First(g => g.Id == f.Id);
-
                 var expr = AssignmentExpression(
                     SyntaxKind.SimpleAssignmentExpression,
-                    IdentifierName(field.Name),
+                    IdentifierName(f.FieldName),
                     ConvertVariable(MemberAccessExpression(
                             SyntaxKind.SimpleMemberAccessExpression,
                             IdentifierName("op" + id),
@@ -283,7 +317,7 @@ namespace LibAtem.XmlState.MacroSpec
                 .WithNewKeyword(Token(SyntaxKind.NewKeyword)).WithInitializer(InitializerExpression(SyntaxKind.ObjectInitializerExpression, props)));
         }
 
-        private static MemberDeclarationSyntax GenerateXmlToMacroOp(IReadOnlyList<Operation> operations, IReadOnlyList<Field> fields)
+        private static MemberDeclarationSyntax GenerateXmlToMacroOp(IReadOnlyList<Operation> operations)
         {
             var switchStmt = SwitchStatement(MemberAccessExpression(
                 SyntaxKind.SimpleMemberAccessExpression,
@@ -293,7 +327,7 @@ namespace LibAtem.XmlState.MacroSpec
             foreach (Operation op in operations)
             {
                 var label = CaseSwitchLabel(ParseExpression("MacroOperationType." + op.Id));
-                var opCase = SwitchSection(List(new SwitchLabelSyntax[] {label}), List(new StatementSyntax[] {GenerateXmlToMacroOp(op, fields)}));
+                var opCase = SwitchSection(List(new SwitchLabelSyntax[] {label}), List(new StatementSyntax[] {GenerateXmlToMacroOp(op)}));
                 switchStmt = switchStmt.AddSections(opCase);
             }
 
@@ -307,21 +341,19 @@ namespace LibAtem.XmlState.MacroSpec
                 .AddBodyStatements(switchStmt);
         }
 
-        private static ReturnStatementSyntax GenerateXmlToMacroOp(Operation op, IReadOnlyList<Field> fields)
+        private static ReturnStatementSyntax GenerateXmlToMacroOp(Operation op)
         {
             var props = SeparatedList<ExpressionSyntax>();
 
             foreach (OperationField f in op.Fields)
             {
-                Field field = fields.First(g => g.Id == f.Id);
-
                 var expr = AssignmentExpression(
                     SyntaxKind.SimpleAssignmentExpression,
                     IdentifierName(f.PropName),
                     ConvertVariable(MemberAccessExpression(
                         SyntaxKind.SimpleMemberAccessExpression,
                         IdentifierName("mac"),
-                        IdentifierName(field.Name)),
+                        IdentifierName(f.FieldName)),
                         TypeMappings.MapType(f.Type), f.Type));
 
                 props = props.Add(expr);
