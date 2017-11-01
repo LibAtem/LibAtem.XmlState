@@ -5,7 +5,8 @@ build:
   image: microsoft/dotnet:2.0-sdk
   before_script:
     - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@git.julusian.co.uk/atem/LibAtem ../LibAtem
-    - git clone https://github.com/Julusian/FatAntelope.git ../FatAntelope
+    - git submodule sync --recursive
+    - git submodule update --init --recursive
     - dotnet restore LibAtem.XmlState.Test
   script:
     - dotnet publish -o "$(pwd)/build" -c Release LibAtem.XmlState
