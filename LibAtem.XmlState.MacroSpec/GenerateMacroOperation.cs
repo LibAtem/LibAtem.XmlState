@@ -13,7 +13,7 @@ using LibAtem.Serialization;
 
 namespace LibAtem.XmlState.MacroSpec
 {
-    public class Program
+    public class GenerateMacroOperation
     {
         private static ExpressionSyntax ConvertVariable(ExpressionSyntax expr, string fromType, string toType)
         {
@@ -341,7 +341,7 @@ namespace LibAtem.XmlState.MacroSpec
             var defaultCase = SwitchSection(List(new SwitchLabelSyntax[] {DefaultSwitchLabel()}), List(new StatementSyntax[] {throwStmt}));
             switchStmt = switchStmt.AddSections(defaultCase);
             
-            return MethodDeclaration(ParseTypeName("IMacroOperation"), "ToMacroOp")
+            return MethodDeclaration(ParseTypeName("MacroOpBase"), "ToMacroOp")
                 .AddModifiers(Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.StaticKeyword))
                 .AddParameterListParameters(Parameter(Identifier("mac")).AddModifiers(Token(SyntaxKind.ThisKeyword)).WithType(IdentifierName("MacroOperation")))
                 .AddBodyStatements(switchStmt);
