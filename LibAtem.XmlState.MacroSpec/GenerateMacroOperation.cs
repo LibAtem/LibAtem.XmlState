@@ -74,6 +74,7 @@ namespace LibAtem.XmlState.MacroSpec
             }
 
             fields = fields.Distinct().OrderBy(f => f.Id).ToList();
+            operations = operations.OrderBy(o => o.Id).ToList();
 
             List<IGrouping<string, Field>> groups = fields.GroupBy(f => f.Id).ToList();
             var badGroups = groups.Where(g => g.Count() > 1 && !g.All(f => f.IsEnum)).ToList();
@@ -123,7 +124,7 @@ namespace LibAtem.XmlState.MacroSpec
 
         private static IEnumerable<MemberDeclarationSyntax> GenerateField(Field field, IReadOnlyList<Operation> operations)
         {
-            List<string> opNames = operations.Where(o => o.Fields.Any(f => f.Id == field.Id)).Select(o => o.Id).ToList();
+            List<string> opNames = operations.Where(o => o.Fields.Any(f => f.Id == field.Id)).Select(o => o.Id).OrderBy(n => n).ToList();
             if (opNames.Count == 0)
                 throw new Exception("Found Field with no usages: " + field.Entries);
 
