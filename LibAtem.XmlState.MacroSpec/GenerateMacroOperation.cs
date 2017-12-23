@@ -107,7 +107,7 @@ namespace LibAtem.XmlState.MacroSpec
             if (spec.Item1.Any(o => o.Fields.Count == 0))
                 throw new Exception("Found some Operation with no fields");
 
-            Console.WriteLine(string.Format("Loaded spec with {0} Fields and {1} Operations", spec.Item2.Count, spec.Item2.Count));
+            Console.WriteLine(string.Format("Loaded spec with {0} Fields and {1} Operations", spec.Item2.Count, spec.Item1.Count));
 
             var code = GenerateClass(spec.Item1, spec.Item2);
 
