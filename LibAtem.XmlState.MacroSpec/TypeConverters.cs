@@ -1,6 +1,6 @@
 using System;
 
-namespace LibAtem.XmlState.MacroSpec
+namespace LibAtem.XmlState.GenerateMacroOperation
 {
     public class TypeMappings
     {

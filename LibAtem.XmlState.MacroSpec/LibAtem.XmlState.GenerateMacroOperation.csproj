@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <ApplicationIcon />
     <OutputType>Exe</OutputType>
-    <StartupObject>LibAtem.XmlState.MacroSpec.GenerateMacroOperation</StartupObject>
+    <StartupObject>LibAtem.XmlState.GenerateMacroOperation.GenerateMacroOperation</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

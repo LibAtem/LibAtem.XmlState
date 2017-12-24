@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LibAtem.XmlState.MacroSpec
+namespace LibAtem.XmlState.GenerateMacroOperation
 {
     public class FieldEntry : IEquatable<FieldEntry>
     {
@@ -42,16 +42,15 @@ namespace LibAtem.XmlState.MacroSpec
     public class Field : IEquatable<Field>
     {
         public Field(string id, string name, string type, bool isEnum, bool enumAsString) :
-            this(id, new List<FieldEntry> { new FieldEntry(name, type)}, enumAsString)
+            this(id, new List<FieldEntry> { new FieldEntry(name, type)}, enumAsString, isEnum)
         {
-            IsEnum = isEnum;
         }
         
-        public Field(string id, IReadOnlyList<FieldEntry> entries, bool enumAsString)
+        public Field(string id, IReadOnlyList<FieldEntry> entries, bool enumAsString, bool isEnum)
         {
             Id = id;
             Entries = entries;
-            IsEnum = true;
+            IsEnum = isEnum;
             EnumAsString = enumAsString;
         }
 
@@ -95,16 +94,18 @@ namespace LibAtem.XmlState.MacroSpec
     
     public class Operation
     {
-        public Operation(string id, string classname, IEnumerable<OperationField> fields)
+        public Operation(string id, string classname, IEnumerable<OperationField> fields, bool allowNoFields)
         {
             Id = id;
             Classname = classname;
             Fields = fields.ToList();
+            AllowNoFields = allowNoFields;
         }
 
         public string Id { get; }
         public string Classname { get; }
         public IReadOnlyList<OperationField> Fields { get; }
+        public bool AllowNoFields { get; }
     }
 
     public class OperationField
