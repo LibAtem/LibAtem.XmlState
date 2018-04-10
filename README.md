@@ -1,5 +1,7 @@
 # LibAtem.XmlState
 
+[![Build Status](https://travis-ci.org/LibAtem/LibAtem.XmlState.svg?branch=master)](https://travis-ci.org/LibAtem/LibAtem.XmlState)
+
 This is the library for parsing the XML saved from the Blackmagic Design ATEM software control client
 
 It is written for .Net Core 2.0 and has been tested on Windows and Linux

@@ -1,0 +1,14 @@
+language: csharp
+mono: none
+dotnet: 2.0.0
+
+before_script:
+  - git clone https://github.com/LibAtem/LibAtem.git ../LibAtem
+  - git submodule sync --recursive
+  - git submodule update --init --recursive
+  - dotnet restore LibAtem.XmlState.Test
+script:
+  - dotnet publish -o "$(pwd)/build" -c Release LibAtem.XmlState
+  - cd LibAtem.XmlState.Test
+  - dotnet test
+
