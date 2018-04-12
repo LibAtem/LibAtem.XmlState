@@ -21,6 +21,8 @@ Coming soon
 
 ### Related Projects
 * ATEM Client [LibAtem](https://github.com/LibAtem/LibAtem)
+* ATEM Client profile helper [LibAtem.DeviceProfile](https://github.com/LibAtem/LibAtem.DeviceProfile)
+* ATEM Client comparison tests [LibAtem.ComparisonTests](https://github.com/LibAtem/LibAtem.ComparisonTests)
 
 ### License
 
