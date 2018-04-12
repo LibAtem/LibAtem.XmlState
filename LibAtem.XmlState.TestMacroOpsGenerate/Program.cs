@@ -1,15 +1,15 @@
-﻿using LibAtem.Commands.Macro;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using LibAtem.Commands;
+using LibAtem.Commands.Macro;
 using LibAtem.Net;
 using LibAtem.Net.DataTransfer;
 using LibAtem.Util;
 
-namespace LibAtem.MacroOperations.TestGenerate
+namespace LibAtem.XmlState.TestMacroOpsGenerate
 {
     class SaveMacrosToFile
     {
