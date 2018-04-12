@@ -26,6 +26,6 @@ Coming soon
 
 ### License
 
-LibAtem.XmlState is distributed under the GNU Lesser General Public License LGPLv3 or higher, see the file LICENSE.md for details.
+LibAtem.XmlState is distributed under the GNU Lesser General Public License LGPLv3 or higher, see the file LICENSE for details.
 
 
